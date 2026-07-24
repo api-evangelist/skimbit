@@ -1,0 +1,105 @@
+openapi: 3.0.3
+info:
+  title: Skimlinks Merchant Commissions Domains API
+  version: v4
+  description: 'The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher''s monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.
+
+
+    Authentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.
+
+
+    Rate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.'
+  contact:
+    name: Skimlinks Developer Support
+    url: https://developers.skimlinks.com/merchant.html
+  x-generated: '2026-07-21'
+  x-method: searched
+  x-source: https://developers.skimlinks.com/merchant.html (Apiary blueprint skimlinksmerchantapi)
+servers:
+- url: https://merchants.skimapis.com
+  description: Skimlinks Merchant API production host
+security:
+- access_token: []
+tags:
+- name: Domains
+paths:
+  /v4/publisher/{publisher_id}/domains:
+    get:
+      operationId: listDomains
+      summary: List merchant domains
+      description: Returns the complete set of Skimlinks merchant domains available for the authenticated publisher.
+      tags:
+      - Domains
+      parameters:
+      - name: publisher_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: access_token
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of merchant domains.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  has_more:
+                    type: boolean
+                  last_val:
+                    type: string
+                    nullable: true
+                  next_prefix:
+                    type: string
+                    nullable: true
+                  next_val:
+                    type: string
+                    nullable: true
+                  num_returned:
+                    type: integer
+                  domains:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MerchantDomain'
+              example:
+                has_more: false
+                last_val: zzcostumes.fr
+                domains:
+                - advertiser_id: 4831
+                  domain: newegg.com
+                  merchant_id: 9921
+                  id: 49333
+                - advertiser_id: 9225
+                  domain: bestbuy.com
+                  merchant_id: 156781
+                  id: 182690
+                num_returned: 26324
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded (40 requests/min, 1000/hour per API key).
+  schemas:
+    MerchantDomain:
+      type: object
+      properties:
+        id:
+          type: integer
+        domain:
+          type: string
+        merchant_id:
+          type: integer
+        advertiser_id:
+          type: integer
+  securitySchemes:
+    access_token:
+      type: apiKey
+      in: query
+      name: access_token
+      description: Timestamp-based access token obtained from https://authentication.skimapis.com/access_token via a client_credentials grant using your client_id and client_secret.

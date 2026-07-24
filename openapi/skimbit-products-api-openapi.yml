@@ -1,0 +1,524 @@
+openapi: 3.0.3
+info:
+  title: Skimlinks Merchant Commissions Products API
+  version: v4
+  description: 'The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher''s monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.
+
+
+    Authentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.
+
+
+    Rate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.'
+  contact:
+    name: Skimlinks Developer Support
+    url: https://developers.skimlinks.com/merchant.html
+  x-generated: '2026-07-21'
+  x-method: searched
+  x-source: https://developers.skimlinks.com/merchant.html (Apiary blueprint skimlinksmerchantapi)
+servers:
+- url: https://merchants.skimapis.com
+  description: Skimlinks Merchant API production host
+security:
+- access_token: []
+tags:
+- name: Products
+paths:
+  /publisher/{publisher_id}/product:
+    get:
+      operationId: getProduct
+      summary: Get product details and alternatives
+      description: Query for a specific product (by product_url, upc, or product_id) and get information plus alternative merchants offering the same product. Default rate limit 80/min and 5000/hour.
+      tags:
+      - Products
+      parameters:
+      - name: publisher_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: access_token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: publisher_domain_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: product_url
+        in: query
+        schema:
+          type: string
+        description: The product URL to query.
+      - name: product_keywords
+        in: query
+        schema:
+          type: string
+      - name: upc
+        in: query
+        schema:
+          type: string
+      - name: product_id
+        in: query
+        schema:
+          type: string
+      - name: product_id_type
+        in: query
+        schema:
+          type: string
+          enum:
+          - upc
+          - asin
+          default: upc
+      - name: merchant_type
+        in: query
+        schema:
+          type: string
+      - name: domains
+        in: query
+        schema:
+          type: string
+        description: Pipe-separated domains to filter alternatives.
+      - name: exclude_domains
+        in: query
+        schema:
+          type: string
+      - name: referrer_url
+        in: query
+        schema:
+          type: string
+      - name: per_merchant_limit
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: alternatives_size
+        in: query
+        schema:
+          type: integer
+      - name: country_code
+        in: query
+        schema:
+          type: string
+      - name: alternative_country_code
+        in: query
+        schema:
+          type: string
+      - name: sort_by
+        in: query
+        schema:
+          type: string
+      - name: sort_desc
+        in: query
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      responses:
+        '200':
+          description: Product details plus alternatives.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product_details:
+                    $ref: '#/components/schemas/Product'
+                  product_alternatives:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /v1/publisher/{publisher_id}/products:
+    post:
+      operationId: getMultiProducts
+      summary: Get multiple product details and alternatives
+      description: Query multiple product URLs (or product ids) at once and get information and alternatives for each. Default rate limit 20/min and 1000/hour.
+      tags:
+      - Products
+      parameters:
+      - name: publisher_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: access_token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: publisher_domain_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: merchant_type
+        in: query
+        schema:
+          type: string
+      - name: domains
+        in: query
+        schema:
+          type: string
+      - name: exclude_domains
+        in: query
+        schema:
+          type: string
+      - name: referrer_url
+        in: query
+        schema:
+          type: string
+      - name: per_merchant_limit
+        in: query
+        schema:
+          type: integer
+          default: 1
+      - name: alternatives_size
+        in: query
+        schema:
+          type: integer
+      - name: country_code
+        in: query
+        schema:
+          type: string
+      - name: alternative_country_code
+        in: query
+        schema:
+          type: string
+      - name: sort_by
+        in: query
+        schema:
+          type: string
+      - name: sort_desc
+        in: query
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: product_id_type
+        in: query
+        schema:
+          type: string
+          enum:
+          - upc
+          - asin
+          default: upc
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_urls:
+                  type: array
+                  items:
+                    type: string
+                  description: The product URLs to query.
+                product_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: Product ids (UPC/ASIN), required if product_urls is not passed.
+            example:
+              product_urls:
+              - https://www.example-merchant.com/product/1
+              - https://www.example-merchant.com/product/2
+      responses:
+        '200':
+          description: Keyed results of products with alternatives.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Product'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /publisher/{publisher_id}/trending-products:
+    get:
+      operationId: getTrendingProducts
+      summary: Get trending products
+      description: Insights into products trending across the Skimlinks network that the publisher has not yet featured. Click data updates hourly; sales information available for the past 7 and 30 days.
+      tags:
+      - Products
+      parameters:
+      - name: publisher_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: access_token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: period
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - today
+          - 7_days
+          - 30_days
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 30
+          minimum: 1
+          maximum: 600
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      - name: sort_by
+        in: query
+        schema:
+          type: string
+          enum:
+          - popular_rank
+          - trending_rank
+      - name: sort_dir
+        in: query
+        schema:
+          type: string
+          enum:
+          - DESC
+          - ASC
+      - name: a_id
+        in: query
+        schema:
+          type: integer
+      - name: country_code
+        in: query
+        schema:
+          type: string
+      - name: audience_country_code
+        in: query
+        schema:
+          type: string
+      - name: vertical_id
+        in: query
+        schema:
+          type: integer
+      - name: product_search
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Trending products with pagination.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  reports:
+                    type: array
+                    items:
+                      type: object
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /publisher/{publisher_id}/product-report:
+    get:
+      operationId: getProductBoughtReport
+      summary: Get products bought report
+      description: Insights about the products readers purchased after clicking through commerce content, including SKU, quantity, order value and revenue. Features data from Awin, CJ, Rakuten, Impact, Partnerize and Pepperjam networks only.
+      tags:
+      - Products
+      parameters:
+      - name: publisher_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: access_token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: start_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: end_date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 30
+          minimum: 1
+          maximum: 600
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      - name: sort_by
+        in: query
+        schema:
+          type: string
+          enum:
+          - quantity
+          - order_amount
+          - publisher_commission_amount
+      - name: sort_dir
+        in: query
+        schema:
+          type: string
+          enum:
+          - DESC
+          - ASC
+      - name: currency
+        in: query
+        schema:
+          type: string
+      - name: product_search
+        in: query
+        schema:
+          type: string
+      - name: domain_id
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Products bought with pagination.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_report:
+                    type: array
+                    items:
+                      type: object
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    Pagination:
+      type: object
+      properties:
+        has_next:
+          type: boolean
+        total_count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+    Product:
+      type: object
+      properties:
+        advertiser_id:
+          type: string
+        commission_rate:
+          type: number
+        conversion_rate:
+          type: number
+        ecpc:
+          type: number
+        country:
+          type: string
+        currency:
+          type: string
+        description:
+          type: string
+          nullable: true
+        ean:
+          type: string
+          nullable: true
+        gtin:
+          type: string
+          nullable: true
+        upc:
+          type: string
+          nullable: true
+        sku:
+          type: string
+          nullable: true
+        google_category_id:
+          type: string
+          nullable: true
+        is_available:
+          type: boolean
+        latest_availability:
+          type: boolean
+          nullable: true
+        latest_price:
+          type: number
+          nullable: true
+        latest_ts_updated:
+          type: string
+          nullable: true
+        merchant_logo:
+          type: string
+        merchant_name:
+          type: string
+        original_currency:
+          type: string
+        original_price:
+          type: number
+          nullable: true
+        price:
+          type: number
+        product_brand:
+          type: string
+          nullable: true
+        product_name:
+          type: string
+        product_images:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              xsize:
+                type: integer
+                nullable: true
+              ysize:
+                type: integer
+                nullable: true
+        url_normalized:
+          type: string
+        urls:
+          type: object
+          properties:
+            affiliated_url:
+              type: string
+            product_url:
+              type: string
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded. Returns 429 Too Many Requests.
+  securitySchemes:
+    access_token:
+      type: apiKey
+      in: query
+      name: access_token
+      description: Timestamp-based access token obtained from https://authentication.skimapis.com/access_token via a client_credentials grant using your client_id and client_secret.

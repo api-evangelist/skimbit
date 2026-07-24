@@ -1,0 +1,233 @@
+openapi: 3.0.3
+info:
+  title: Skimlinks Merchant Commissions API
+  version: v4
+  description: 'The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher''s monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.
+
+
+    Authentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.
+
+
+    Rate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.'
+  contact:
+    name: Skimlinks Developer Support
+    url: https://developers.skimlinks.com/merchant.html
+  x-generated: '2026-07-21'
+  x-method: searched
+  x-source: https://developers.skimlinks.com/merchant.html (Apiary blueprint skimlinksmerchantapi)
+servers:
+- url: https://merchants.skimapis.com
+  description: Skimlinks Merchant API production host
+security:
+- access_token: []
+tags:
+- name: Commissions
+paths:
+  /publisher/{publisher_id}/commission-report:
+    get:
+      operationId: searchCommissions
+      summary: Search commissions
+      description: Query Skimlinks' raw commission data between two dates, or list all commissions changed since a point in time via `updated_since`. Limited to 40 requests/min and 300/hour per API key (80/min, 500/hour, 1000/day per IP).
+      tags:
+      - Commissions
+      parameters:
+      - name: publisher_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: access_token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 30
+          minimum: 1
+          maximum: 5000
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      - name: start_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: end_date
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: updated_since
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: custom_id
+        in: query
+        schema:
+          type: string
+        description: Filter by xcust custom click id.
+      - name: merchant_id
+        in: query
+        schema:
+          type: integer
+      - name: a_id
+        in: query
+        schema:
+          type: integer
+      - name: domain_id
+        in: query
+        schema:
+          type: integer
+      - name: sort_dir
+        in: query
+        schema:
+          type: string
+          enum:
+          - DESC
+          - ASC
+      - name: sort_by
+        in: query
+        schema:
+          type: string
+          enum:
+          - id
+          - transaction_date
+      - name: commission_id
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - active
+          - cancelled
+      - name: commission_type
+        in: query
+        schema:
+          type: string
+          enum:
+          - CPA
+          - CPC
+          - CPL
+          - Flat-fee
+          - Performance
+      responses:
+        '200':
+          description: Commission records with pagination.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  commissions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Commission'
+              example:
+                pagination:
+                  has_next: true
+                  total_count: 236
+                  offset: 0
+                  limit: 10
+                commissions:
+                - commission_id: 123
+                  transaction_details:
+                    basket:
+                      items: 1
+                      publisher_amount: 0.35
+                      order_amount: 8.69
+                      currency: GBP
+                      commission_type: CPC
+                    status: active
+                    payment_status: paid
+                    transaction_date: '2017-03-01 15:15:00'
+                  merchant_details:
+                    merchant_name: Maplin Electronics Ltd
+                    merchant_id: 8212
+                    advertiser_id: 124
+                  publisher_id: 1
+                  publisher_domain_id: 2
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded. Returns 429 Too Many Requests.
+  schemas:
+    Pagination:
+      type: object
+      properties:
+        has_next:
+          type: boolean
+        total_count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+    Commission:
+      type: object
+      properties:
+        commission_id:
+          type: integer
+        transaction_details:
+          type: object
+          properties:
+            aggregation_id:
+              type: string
+            basket:
+              type: object
+              properties:
+                items:
+                  type: integer
+                publisher_amount:
+                  type: number
+                order_amount:
+                  type: number
+                currency:
+                  type: string
+                commission_type:
+                  type: string
+            status:
+              type: string
+            payment_status:
+              type: string
+            transaction_date:
+              type: string
+            last_updated:
+              type: string
+            invoice_id:
+              type: string
+        merchant_details:
+          type: object
+          properties:
+            merchant_name:
+              type: string
+            merchant_id:
+              type: integer
+            advertiser_name:
+              type: string
+            advertiser_id:
+              type: integer
+        click_details:
+          type: object
+        publisher_id:
+          type: integer
+        publisher_domain_id:
+          type: integer
+  securitySchemes:
+    access_token:
+      type: apiKey
+      in: query
+      name: access_token
+      description: Timestamp-based access token obtained from https://authentication.skimapis.com/access_token via a client_credentials grant using your client_id and client_secret.

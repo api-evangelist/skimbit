@@ -1,0 +1,270 @@
+openapi: 3.0.3
+info:
+  title: Skimlinks Merchant Commissions Offers API
+  version: v4
+  description: 'The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher''s monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.
+
+
+    Authentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.
+
+
+    Rate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.'
+  contact:
+    name: Skimlinks Developer Support
+    url: https://developers.skimlinks.com/merchant.html
+  x-generated: '2026-07-21'
+  x-method: searched
+  x-source: https://developers.skimlinks.com/merchant.html (Apiary blueprint skimlinksmerchantapi)
+servers:
+- url: https://merchants.skimapis.com
+  description: Skimlinks Merchant API production host
+security:
+- access_token: []
+tags:
+- name: Offers
+paths:
+  /v4/publisher/{publisher_id}/offers:
+    get:
+      operationId: listOffers
+      summary: List / search offers
+      description: Returns merchant offers (coupons, deals, promotions) available to the authenticated publisher.
+      tags:
+      - Offers
+      parameters:
+      - name: publisher_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: access_token
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: search
+        in: query
+        schema:
+          type: string
+      - name: merchant_id
+        in: query
+        schema:
+          type: integer
+      - name: a_id
+        in: query
+        schema:
+          type: integer
+      - name: vertical
+        in: query
+        schema:
+          type: integer
+      - name: country
+        in: query
+        schema:
+          type: string
+      - name: period
+        in: query
+        schema:
+          type: string
+          enum:
+          - upcoming
+          - ongoing
+          - finished
+          - finishing_soon
+          - not_expired
+          - all
+      - name: favourite_type
+        in: query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 100
+      - name: offset
+        in: query
+        schema:
+          type: integer
+      - name: sort_by
+        in: query
+        schema:
+          type: string
+          enum:
+          - offer_starts
+          - offer_ends
+          - id
+      - name: sort_dir
+        in: query
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      responses:
+        '201':
+          description: A list of offers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  has_more:
+                    type: boolean
+                  offers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Offer'
+                  last_val:
+                    type: integer
+                    nullable: true
+                  next_val:
+                    type: integer
+                    nullable: true
+                  num_returned:
+                    type: integer
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded (40 requests/min, 1000/hour per API key).
+  schemas:
+    Rate:
+      type: object
+      nullable: true
+      properties:
+        aggregation_type:
+          type: string
+          enum:
+          - minimum
+          - maximum
+          - normal
+        rate_type:
+          type: string
+          enum:
+          - percentage
+          - flat_rate
+        base_rate:
+          type: number
+        increased_rate:
+          type: number
+        currency:
+          type: string
+          nullable: true
+        payout_type:
+          type: string
+          enum:
+          - cpa
+          - cpc
+          - cpl
+        description:
+          type: string
+          nullable: true
+        start_date:
+          type: string
+          format: date-time
+    Merchant:
+      type: object
+      description: A merchant program having an active relationship with the authenticated publisher.
+      properties:
+        advertiser_id:
+          type: integer
+          description: The internal id of the merchant.
+        merchant_ids:
+          type: array
+          items:
+            type: string
+          description: Internal ids of programs under advertiser_id.
+        name:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+        partner_type:
+          type: string
+          enum:
+          - standard
+          - preferred
+          - vip
+        verticals:
+          type: array
+          items:
+            type: string
+        alternative_verticals:
+          type: array
+          items:
+            type: object
+        countries:
+          type: array
+          items:
+            type: string
+        favourite:
+          type: boolean
+        calculated_conversion_rate:
+          type: number
+        estimated_payment_days:
+          type: string
+        estimated_attribution_window:
+          type: string
+        calculated_ecpc:
+          type: number
+        calculated_average_order_value:
+          type: number
+        calculated_commission_rate:
+          type: number
+        minimum_rate:
+          $ref: '#/components/schemas/Rate'
+        maximum_rate:
+          $ref: '#/components/schemas/Rate'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    Metadata:
+      type: object
+      properties:
+        logo:
+          type: string
+        description:
+          type: string
+        special_conditions:
+          type: string
+    Offer:
+      type: object
+      properties:
+        id:
+          type: integer
+        offer_type:
+          type: string
+          enum:
+          - sale
+          - coupon
+          - sweepstake
+          - hot_product
+          - free_shipping
+          - seasonal
+        offer_starts:
+          type: string
+          format: date-time
+        offer_ends:
+          type: string
+          format: date-time
+        title:
+          type: string
+        description:
+          type: string
+        coupon_code:
+          type: string
+          nullable: true
+        url:
+          type: string
+        terms:
+          type: string
+          nullable: true
+        merchant_details:
+          $ref: '#/components/schemas/Merchant'
+  securitySchemes:
+    access_token:
+      type: apiKey
+      in: query
+      name: access_token
+      description: Timestamp-based access token obtained from https://authentication.skimapis.com/access_token via a client_credentials grant using your client_id and client_secret.

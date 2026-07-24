@@ -1,0 +1,102 @@
+openapi: 3.0.3
+info:
+  title: Skimlinks Merchant Commissions Verticals API
+  version: v4
+  description: 'The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher''s monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.
+
+
+    Authentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.
+
+
+    Rate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.'
+  contact:
+    name: Skimlinks Developer Support
+    url: https://developers.skimlinks.com/merchant.html
+  x-generated: '2026-07-21'
+  x-method: searched
+  x-source: https://developers.skimlinks.com/merchant.html (Apiary blueprint skimlinksmerchantapi)
+servers:
+- url: https://merchants.skimapis.com
+  description: Skimlinks Merchant API production host
+security:
+- access_token: []
+tags:
+- name: Verticals
+paths:
+  /v4/verticals:
+    get:
+      operationId: listVerticals
+      summary: List verticals
+      description: Returns a list of verticals and vertical groups. No authentication required.
+      tags:
+      - Verticals
+      security: []
+      responses:
+        '200':
+          description: A list of vertical groups.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vertical_groups:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        verticals:
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/Vertical'
+  /v4/alternative_verticals:
+    get:
+      operationId: listAlternativeVerticals
+      summary: List alternative verticals
+      description: Returns a list of alternative vertical hierarchies (multiple taxonomies of unlimited depth). No authentication required.
+      tags:
+      - Verticals
+      security: []
+      responses:
+        '200':
+          description: A list of alternative vertical taxonomies.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlternativeVertical'
+components:
+  schemas:
+    Vertical:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        group_name:
+          type: string
+        group_id:
+          type: integer
+          nullable: true
+    AlternativeVertical:
+      type: object
+      properties:
+        taxonomy:
+          type: string
+        id:
+          type: integer
+        name:
+          type: string
+        verticals:
+          type: array
+          items:
+            type: object
+  securitySchemes:
+    access_token:
+      type: apiKey
+      in: query
+      name: access_token
+      description: Timestamp-based access token obtained from https://authentication.skimapis.com/access_token via a client_credentials grant using your client_id and client_secret.
