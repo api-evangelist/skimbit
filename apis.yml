@@ -1,8 +1,35 @@
 aid: skimbit
 name: SkimBit
-description: SkimBit is a company surfaced as a portfolio company of 500-global and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  SkimBit Ltd, operating as Skimlinks, is a London-founded content-monetization
+  and affiliate-marketing platform (now part of Taboola) that helps publishers
+  and content creators earn commerce revenue from the products and merchants
+  they mention in editorial content. Skimlinks automatically affiliates outbound
+  merchant links, tracks the resulting clicks and commissions across thousands
+  of affiliate networks and merchant programs, and pays publishers a share of
+  the revenue. For developers, Skimlinks exposes a suite of publisher-facing
+  REST APIs — the Merchant API (merchant programs, domains, verticals and
+  offers), the Reporting API (raw commissions, aggregated performance,
+  trending/purchased products, payment status and deactivated merchants) and the
+  Product Key API (product details, pricing, availability and merchant
+  alternatives across a billion+ product offers) — plus the Skimlinks
+  JavaScript on-page monetization script and a batch Data Pipe delivering
+  event-level clicks, impressions, commissions and product-purchase data to
+  cloud storage.
 url: https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.skimlinks.com/wp-content/uploads/2025/06/Colour_icon.svg
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -11,15 +38,209 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-apis: []
+- Affiliate Marketing
+- Content Monetization
+- Commerce
+- Publishers
+- Advertising
+- Retail
+- Reporting
+- Products
+- eCommerce
+apis:
+- aid: skimbit:skimbit-commissions-api
+  name: SkimBit Commissions API
+  description: The Commissions API from SkimBit — 1 operation(s) for commissions.
+  humanURL: https://developers.skimlinks.com/merchant.html
+  baseURL: https://merchants.skimapis.com
+  tags:
+  - Commissions
+  properties:
+  - type: OpenAPI
+    url: openapi/skimbit-commissions-api-openapi.yml
+  - type: Documentation
+    url: https://developers.skimlinks.com/merchant.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/reporting.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/product-key.html
+- aid: skimbit:skimbit-domains-api
+  name: SkimBit Domains API
+  description: The Domains API from SkimBit — 1 operation(s) for domains.
+  humanURL: https://developers.skimlinks.com/merchant.html
+  baseURL: https://merchants.skimapis.com
+  tags:
+  - Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/skimbit-domains-api-openapi.yml
+  - type: Documentation
+    url: https://developers.skimlinks.com/merchant.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/reporting.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/product-key.html
+- aid: skimbit:skimbit-merchants-api
+  name: SkimBit Merchants API
+  description: The Merchants API from SkimBit — 1 operation(s) for merchants.
+  humanURL: https://developers.skimlinks.com/merchant.html
+  baseURL: https://merchants.skimapis.com
+  tags:
+  - Merchants
+  properties:
+  - type: OpenAPI
+    url: openapi/skimbit-merchants-api-openapi.yml
+  - type: Documentation
+    url: https://developers.skimlinks.com/merchant.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/reporting.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/product-key.html
+- aid: skimbit:skimbit-offers-api
+  name: SkimBit Offers API
+  description: The Offers API from SkimBit — 1 operation(s) for offers.
+  humanURL: https://developers.skimlinks.com/merchant.html
+  baseURL: https://merchants.skimapis.com
+  tags:
+  - Offers
+  properties:
+  - type: OpenAPI
+    url: openapi/skimbit-offers-api-openapi.yml
+  - type: Documentation
+    url: https://developers.skimlinks.com/merchant.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/reporting.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/product-key.html
+- aid: skimbit:skimbit-payments-api
+  name: SkimBit Payments API
+  description: The Payments API from SkimBit — 1 operation(s) for payments.
+  humanURL: https://developers.skimlinks.com/merchant.html
+  baseURL: https://merchants.skimapis.com
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/skimbit-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.skimlinks.com/merchant.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/reporting.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/product-key.html
+- aid: skimbit:skimbit-products-api
+  name: SkimBit Products API
+  description: The Products API from SkimBit — 4 operation(s) for products.
+  humanURL: https://developers.skimlinks.com/merchant.html
+  baseURL: https://merchants.skimapis.com
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/skimbit-products-api-openapi.yml
+  - type: Documentation
+    url: https://developers.skimlinks.com/merchant.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/reporting.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/product-key.html
+- aid: skimbit:skimbit-reports-api
+  name: SkimBit Reports API
+  description: The Reports API from SkimBit — 8 operation(s) for reports.
+  humanURL: https://developers.skimlinks.com/merchant.html
+  baseURL: https://merchants.skimapis.com
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/skimbit-reports-api-openapi.yml
+  - type: Documentation
+    url: https://developers.skimlinks.com/merchant.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/reporting.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/product-key.html
+- aid: skimbit:skimbit-verticals-api
+  name: SkimBit Verticals API
+  description: The Verticals API from SkimBit — 2 operation(s) for verticals.
+  humanURL: https://developers.skimlinks.com/merchant.html
+  baseURL: https://merchants.skimapis.com
+  tags:
+  - Verticals
+  properties:
+  - type: OpenAPI
+    url: openapi/skimbit-verticals-api-openapi.yml
+  - type: Documentation
+    url: https://developers.skimlinks.com/merchant.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/reporting.html
+  - type: Documentation
+    url: https://developers.skimlinks.com/product-key.html
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1
 common:
+- type: DomainSecurity
+  url: security/skimbit-domain-security.yml
 - type: Website
   url: https://skimlinks.com
+- type: DeveloperPortal
+  url: https://developers.skimlinks.com
+- type: Documentation
+  url: https://developers.skimlinks.com
+- type: APIReference
+  url: https://developers.skimlinks.com/merchant.html
+- type: SignUp
+  url: https://signup.skimlinks.com/
+- type: Login
+  url: https://hub.skimlinks.com/login
+- type: Support
+  url: https://support.skimlinks.com/hc/en-us
+- type: Blog
+  url: https://www.skimlinks.com/insights/
+- type: PrivacyPolicy
+  url: https://www.skimlinks.com/privacy-policy/
+- type: TermsOfService
+  url: https://www.skimlinks.com/terms-of-service/
+- type: Authentication
+  url: authentication/skimbit-authentication.yml
+- type: Conventions
+  url: conventions/skimbit-conventions.yml
+- type: RateLimits
+  url: rate-limits/skimbit-rate-limits.yml
+- type: ErrorCatalog
+  url: errors/skimbit-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/skimbit-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/skimbit-lifecycle.yml
+- type: DataModel
+  url: data-model/skimbit-data-model.yml
+- type: Conformance
+  url: conformance/skimbit-conformance.yml
+- type: Components
+  url: components/skimbit-components.yml
+- type: MCPServer
+  url: mcp/skimbit-mcp.yml
+- type: LLMsTxt
+  url: llms/skimbit-llms.txt
+- type: AgenticAccess
+  url: agentic-access/skimbit-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/skimbit-merchant-overlay.yaml
+- type: Overlay
+  url: overlays/skimbit-reporting-overlay.yaml
+- type: Overlay
+  url: overlays/skimbit-product-key-overlay.yaml

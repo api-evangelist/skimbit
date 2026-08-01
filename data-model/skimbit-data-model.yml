@@ -1,0 +1,115 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  openapi/skimbit-merchant-openapi.yml, openapi/skimbit-reporting-openapi.yml,
+  openapi/skimbit-product-key-openapi.yml
+description: >-
+  Entity-relationship graph derived from the Skimlinks API schemas and id
+  reference fields. The domain centres on the Publisher, the Merchant programs
+  (advertisers) they can monetize, the Domains they own, and the events
+  (clicks, impressions, commissions, product purchases) those generate.
+entities:
+- name: Publisher
+  id: publisher_id
+  description: The authenticated Skimlinks publisher account.
+- name: PublisherDomain
+  id: publisher_domain_id
+  description: A website/domain owned by the publisher that Skimlinks monetizes.
+- name: Merchant
+  id: advertiser_id
+  aliases: [merchant_id]
+  description: A merchant/advertiser program in the affiliate network.
+- name: MerchantDomain
+  id: id
+  description: A domain of a merchant that can be monetized.
+- name: Vertical
+  id: id
+  description: A merchant category, grouped into vertical groups and alternative taxonomies.
+- name: Offer
+  id: id
+  description: A coupon / deal / promotion from a merchant.
+- name: Commission
+  id: commission_id
+  description: An individual commission event (sale, lead, click, bonus).
+- name: Product
+  id: sku / upc / product_id
+  description: A merchant product offer with pricing, availability and alternatives.
+- name: ProductPurchase
+  id: aggregation_id
+  description: A product bought by a reader after clicking commerce content.
+- name: Click
+  id: click_id
+  description: A click event routed through the Skimlinks monetisation engine.
+- name: PageImpression
+  id: impression_id
+  description: A page impression event.
+relationships:
+- from: PublisherDomain
+  to: Publisher
+  type: belongs_to
+  via: publisher_id
+- from: Merchant
+  to: Vertical
+  type: has_many
+  via: verticals / alternative_verticals
+- from: MerchantDomain
+  to: Merchant
+  type: belongs_to
+  via: advertiser_id
+- from: Offer
+  to: Merchant
+  type: belongs_to
+  via: merchant_details.advertiser_id
+- from: Commission
+  to: Merchant
+  type: belongs_to
+  via: merchant_details.advertiser_id
+- from: Commission
+  to: PublisherDomain
+  type: belongs_to
+  via: publisher_domain_id
+- from: Commission
+  to: Click
+  type: has_one
+  via: click_id
+- from: ProductPurchase
+  to: Merchant
+  type: belongs_to
+  via: merchant_id
+- from: ProductPurchase
+  to: PublisherDomain
+  type: belongs_to
+  via: publisher_domain_id
+- from: ProductPurchase
+  to: Click
+  type: has_one
+  via: click_id
+- from: Click
+  to: PublisherDomain
+  type: belongs_to
+  via: publisher_domain_id
+- from: Click
+  to: Merchant
+  type: belongs_to
+  via: merchant_id
+- from: Product
+  to: Merchant
+  type: belongs_to
+  via: advertiser_id
+skim_product_ids:
+  1: Skimlinks
+  2: Skimwords
+  12: PCM
+  13: Editorial
+  16: Product Key
+commission_types:
+  1: Sale
+  2: Lead
+  3: Click
+  4: Performance incentive (redistributed)
+  5: Referral bonus
+  6: Standard bonus
+  7: Performance Incentives (Original)
+  8: Bonus merchant
+  9: Flat-fee bonus
+  10: Flat-fee bonus Skimlinks fee

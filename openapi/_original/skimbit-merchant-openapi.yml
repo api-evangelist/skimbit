@@ -1,0 +1,397 @@
+openapi: 3.0.3
+info:
+  title: Skimlinks Merchant API
+  version: v4
+  description: >-
+    The Skimlinks Merchant API provides a convenient way to gather information
+    about the merchants (advertisers/programs) participating in the Skimlinks
+    affiliate program that are available to the authenticated publisher. It
+    exposes merchant programs, the publisher's monetizable domains, the
+    Skimlinks vertical taxonomies, and current merchant offers (coupons, deals,
+    promotions). All responses are JSON.
+
+
+    Authentication: every request requires a temporary, timestamp-based
+    `access_token` passed as a query parameter. Obtain one by POSTing your
+    `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API
+    Authentication credentials) with `grant_type=client_credentials` to
+    `https://authentication.skimapis.com/access_token`.
+
+
+    Rate limiting: some endpoints are limited to 40 requests per minute and 1000
+    per hour per API key. Exceeding the limit returns `429 Too Many Requests`.
+  contact:
+    name: Skimlinks Developer Support
+    url: https://developers.skimlinks.com/merchant.html
+  x-generated: '2026-07-21'
+  x-method: searched
+  x-source: https://developers.skimlinks.com/merchant.html (Apiary blueprint skimlinksmerchantapi)
+servers:
+  - url: https://merchants.skimapis.com
+    description: Skimlinks Merchant API production host
+security:
+  - access_token: []
+tags:
+  - name: Merchants
+  - name: Domains
+  - name: Verticals
+  - name: Offers
+paths:
+  /v4/publisher/{publisher_id}/merchants:
+    get:
+      operationId: listMerchants
+      summary: List / search merchants
+      description: >-
+        Returns the set of Skimlinks merchants available for the authenticated
+        publisher. The merchants and rates returned depend on the specific
+        publisher domain being queried; if `publisher_domain_id` is omitted the
+        first registered domain is used.
+      tags: [Merchants]
+      parameters:
+        - name: publisher_id
+          in: path
+          required: true
+          schema: { type: integer }
+          description: Your Publisher ID.
+        - name: access_token
+          in: query
+          required: true
+          schema: { type: string }
+          description: Timestamp-based access token from the authentication API.
+        - name: publisher_domain_id
+          in: query
+          required: true
+          schema: { type: integer }
+          description: Retrieve information for a specific domain id.
+        - name: a_id
+          in: query
+          schema: { type: integer }
+          description: Filter results by advertiser_id.
+        - name: merchant_id
+          in: query
+          schema: { type: integer }
+          description: Filter results by merchant_id.
+        - name: search
+          in: query
+          schema: { type: string }
+          description: Search query string.
+        - name: vertical
+          in: query
+          schema: { type: integer }
+          description: List merchants from one vertical only (vertical id).
+        - name: country
+          in: query
+          schema: { type: string }
+          description: Two character country code.
+        - name: alternative_vertical_id
+          in: query
+          schema: { type: integer }
+        - name: alternative_vertical_taxonomy
+          in: query
+          schema: { type: string }
+        - name: alternative_vertical_country
+          in: query
+          schema: { type: string }
+        - name: favourite_type
+          in: query
+          schema: { type: string }
+          description: Pass `favourite` to retrieve favourites only.
+        - name: limit
+          in: query
+          schema: { type: integer, default: 200 }
+          description: Number of rows to return.
+        - name: offset
+          in: query
+          schema: { type: integer }
+          description: Paginate through results.
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+            enum: [name, partner_type, calculated_commission_rate, calculated_ecpc, popularity]
+        - name: sort_dir
+          in: query
+          schema: { type: string, enum: [asc, desc] }
+      responses:
+        '201':
+          description: A list of merchants for the publisher.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_currency: { type: string }
+                  merchants:
+                    type: array
+                    items: { $ref: '#/components/schemas/Merchant' }
+                  has_more: { type: boolean }
+                  next_val: { type: string, nullable: true }
+                  last_val: { type: string, nullable: true }
+                  num_returned: { type: integer }
+                  publisher_domain_stats:
+                    type: array
+                    items: { $ref: '#/components/schemas/PublisherDomainStat' }
+              example:
+                user_currency: EUR
+                merchants:
+                  - id: 49697
+                    advertiser_id: 49697
+                    name: JCPenney
+                    favourite: false
+                    partner_type: vip
+                    domains: [jcpenney.com, jcp.com]
+                    calculated_commission_rate: 0.0586546
+                    calculated_ecpc: 0.13564794348
+                    countries: [united states]
+                    metadata:
+                      logo: https://static.skimlinks.com/images/merchant_logos/49697_82b0689aa62ee1d44a74a35faf50b668.png
+                      description: JCPenney is a shopping destination for home furnishings, apparel and accessories.
+                last_val: JCPenney
+                has_more: false
+                next_val: null
+                num_returned: 1
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /v4/publisher/{publisher_id}/domains:
+    get:
+      operationId: listDomains
+      summary: List merchant domains
+      description: Returns the complete set of Skimlinks merchant domains available for the authenticated publisher.
+      tags: [Domains]
+      parameters:
+        - name: publisher_id
+          in: path
+          required: true
+          schema: { type: integer }
+        - name: access_token
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: A list of merchant domains.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  has_more: { type: boolean }
+                  last_val: { type: string, nullable: true }
+                  next_prefix: { type: string, nullable: true }
+                  next_val: { type: string, nullable: true }
+                  num_returned: { type: integer }
+                  domains:
+                    type: array
+                    items: { $ref: '#/components/schemas/MerchantDomain' }
+              example:
+                has_more: false
+                last_val: zzcostumes.fr
+                domains:
+                  - { advertiser_id: 4831, domain: newegg.com, merchant_id: 9921, id: 49333 }
+                  - { advertiser_id: 9225, domain: bestbuy.com, merchant_id: 156781, id: 182690 }
+                num_returned: 26324
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /v4/verticals:
+    get:
+      operationId: listVerticals
+      summary: List verticals
+      description: Returns a list of verticals and vertical groups. No authentication required.
+      tags: [Verticals]
+      security: []
+      responses:
+        '200':
+          description: A list of vertical groups.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vertical_groups:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name: { type: string }
+                        verticals:
+                          type: array
+                          items: { $ref: '#/components/schemas/Vertical' }
+  /v4/alternative_verticals:
+    get:
+      operationId: listAlternativeVerticals
+      summary: List alternative verticals
+      description: Returns a list of alternative vertical hierarchies (multiple taxonomies of unlimited depth). No authentication required.
+      tags: [Verticals]
+      security: []
+      responses:
+        '200':
+          description: A list of alternative vertical taxonomies.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/AlternativeVertical' }
+  /v4/publisher/{publisher_id}/offers:
+    get:
+      operationId: listOffers
+      summary: List / search offers
+      description: Returns merchant offers (coupons, deals, promotions) available to the authenticated publisher.
+      tags: [Offers]
+      parameters:
+        - name: publisher_id
+          in: path
+          required: true
+          schema: { type: integer }
+        - name: access_token
+          in: query
+          required: true
+          schema: { type: string }
+        - name: search
+          in: query
+          schema: { type: string }
+        - name: merchant_id
+          in: query
+          schema: { type: integer }
+        - name: a_id
+          in: query
+          schema: { type: integer }
+        - name: vertical
+          in: query
+          schema: { type: integer }
+        - name: country
+          in: query
+          schema: { type: string }
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [upcoming, ongoing, finished, finishing_soon, not_expired, all]
+        - name: favourite_type
+          in: query
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 100 }
+        - name: offset
+          in: query
+          schema: { type: integer }
+        - name: sort_by
+          in: query
+          schema: { type: string, enum: [offer_starts, offer_ends, id] }
+        - name: sort_dir
+          in: query
+          schema: { type: string, enum: [asc, desc] }
+      responses:
+        '201':
+          description: A list of offers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  has_more: { type: boolean }
+                  offers:
+                    type: array
+                    items: { $ref: '#/components/schemas/Offer' }
+                  last_val: { type: integer, nullable: true }
+                  next_val: { type: integer, nullable: true }
+                  num_returned: { type: integer }
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  securitySchemes:
+    access_token:
+      type: apiKey
+      in: query
+      name: access_token
+      description: >-
+        Timestamp-based access token obtained from
+        https://authentication.skimapis.com/access_token via a
+        client_credentials grant using your client_id and client_secret.
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded (40 requests/min, 1000/hour per API key).
+  schemas:
+    Merchant:
+      type: object
+      description: A merchant program having an active relationship with the authenticated publisher.
+      properties:
+        advertiser_id: { type: integer, description: The internal id of the merchant. }
+        merchant_ids: { type: array, items: { type: string }, description: Internal ids of programs under advertiser_id. }
+        name: { type: string }
+        domains: { type: array, items: { type: string } }
+        partner_type: { type: string, enum: [standard, preferred, vip] }
+        verticals: { type: array, items: { type: string } }
+        alternative_verticals: { type: array, items: { type: object } }
+        countries: { type: array, items: { type: string } }
+        favourite: { type: boolean }
+        calculated_conversion_rate: { type: number }
+        estimated_payment_days: { type: string }
+        estimated_attribution_window: { type: string }
+        calculated_ecpc: { type: number }
+        calculated_average_order_value: { type: number }
+        calculated_commission_rate: { type: number }
+        minimum_rate: { $ref: '#/components/schemas/Rate' }
+        maximum_rate: { $ref: '#/components/schemas/Rate' }
+        metadata: { $ref: '#/components/schemas/Metadata' }
+    PublisherDomainStat:
+      type: object
+      properties:
+        publisher_domain_id: { type: integer }
+        calculated_average_order_value: { type: number }
+        calculated_commission_rate: { type: number }
+        calculated_conversion_rate: { type: number }
+        calculated_ecpc: { type: number }
+        estimated_reversal_rate: { type: number }
+    MerchantDomain:
+      type: object
+      properties:
+        id: { type: integer }
+        domain: { type: string }
+        merchant_id: { type: integer }
+        advertiser_id: { type: integer }
+    Rate:
+      type: object
+      nullable: true
+      properties:
+        aggregation_type: { type: string, enum: [minimum, maximum, normal] }
+        rate_type: { type: string, enum: [percentage, flat_rate] }
+        base_rate: { type: number }
+        increased_rate: { type: number }
+        currency: { type: string, nullable: true }
+        payout_type: { type: string, enum: [cpa, cpc, cpl] }
+        description: { type: string, nullable: true }
+        start_date: { type: string, format: date-time }
+    Metadata:
+      type: object
+      properties:
+        logo: { type: string }
+        description: { type: string }
+        special_conditions: { type: string }
+    Vertical:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        group_name: { type: string }
+        group_id: { type: integer, nullable: true }
+    AlternativeVertical:
+      type: object
+      properties:
+        taxonomy: { type: string }
+        id: { type: integer }
+        name: { type: string }
+        verticals: { type: array, items: { type: object } }
+    Offer:
+      type: object
+      properties:
+        id: { type: integer }
+        offer_type: { type: string, enum: [sale, coupon, sweepstake, hot_product, free_shipping, seasonal] }
+        offer_starts: { type: string, format: date-time }
+        offer_ends: { type: string, format: date-time }
+        title: { type: string }
+        description: { type: string }
+        coupon_code: { type: string, nullable: true }
+        url: { type: string }
+        terms: { type: string, nullable: true }
+        merchant_details: { $ref: '#/components/schemas/Merchant' }

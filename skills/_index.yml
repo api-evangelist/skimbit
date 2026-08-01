@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: generated
+source: >-
+  Grounded in the Skimlinks OpenAPI operations
+  (openapi/skimbit-merchant-openapi.yml, openapi/skimbit-reporting-openapi.yml,
+  openapi/skimbit-product-key-openapi.yml) plus conventions/ and errors/.
+skills:
+- file: skimbit-discover-merchants-and-offers.md
+  name: Discover Skimlinks merchants and offers
+  api: openapi/skimbit-merchant-openapi.yml
+  operations: [listDomains, listVerticals, listMerchants, listOffers]
+- file: skimbit-pull-performance-and-commissions.md
+  name: Pull Skimlinks performance and commissions
+  api: openapi/skimbit-reporting-openapi.yml
+  operations: [searchCommissions, getAggregatedReports, getPaymentStatus, getDeactivatedMerchants]
+- file: skimbit-enrich-content-with-products.md
+  name: Enrich content with Skimlinks Product Key
+  api: openapi/skimbit-product-key-openapi.yml
+  operations: [getProduct, getMultiProducts, getTrendingProducts]

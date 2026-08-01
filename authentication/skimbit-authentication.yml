@@ -1,0 +1,52 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  openapi/skimbit-merchant-openapi.yml, openapi/skimbit-reporting-openapi.yml,
+  openapi/skimbit-product-key-openapi.yml, and the developer docs at
+  https://developers.skimlinks.com/merchant.html
+docs: https://hub.skimlinks.com/toolbox/api#credentials
+summary:
+  types:
+  - apiKey
+  - oauth2-like-client-credentials
+  api_key_in:
+  - query
+  model: >-
+    Two-step, timestamp-based access token. Publishers retrieve a Client ID and
+    Client Secret from the Publisher Hub (Toolbox > APIs > API Authentication
+    credentials), exchange them for a short-lived access_token at the
+    authentication API, then pass that access_token as a query parameter on
+    every Merchant/Reporting/Product Key request.
+token_endpoint:
+  url: https://authentication.skimapis.com/access_token
+  method: POST
+  content_type: application/json
+  grant_type: client_credentials
+  request_fields: [client_id, client_secret, grant_type]
+  response_fields: [access_token, timestamp, expiry_timestamp]
+  token_ttl_seconds: 604800
+  note: >-
+    The access_token is a timestamp-based value of the form
+    "<id>:<timestamp>:<hash>". expiry_timestamp is returned with each token; in
+    the documented example the token is valid for ~7 days. The Product Key API
+    requires a separate, dedicated Client ID / Client Secret issued on request.
+schemes:
+- name: access_token
+  type: apiKey
+  in: query
+  parameter: access_token
+  description: >-
+    Timestamp-based access token obtained from
+    https://authentication.skimapis.com/access_token via a client_credentials
+    grant using your client_id and client_secret. Passed as the access_token
+    query parameter on every request.
+  sources:
+  - openapi/skimbit-merchant-openapi.yml
+  - openapi/skimbit-product-key-openapi.yml
+  - openapi/skimbit-reporting-openapi.yml
+legacy:
+  name: apikey (v3)
+  description: >-
+    The deprecated v3 Merchant API endpoints authenticate with a public apikey
+    plus account_type and account_id query parameters instead of an
+    access_token. Superseded by the v4 access_token flow.

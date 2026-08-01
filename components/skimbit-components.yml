@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://developers.skimlinks.com/skimlinks-script.html,
+  https://s.skimresources.com/js/skimlinks.js
+description: >-
+  Client-side, on-page components Skimlinks provides for publishers to embed
+  monetization directly into their pages, distinct from the server-side REST
+  APIs. The core component is the Skimlinks JavaScript, a single embeddable
+  script that affiliates outbound merchant links and (optionally) turns
+  keywords into affiliate links in the browser.
+families:
+- name: Skimlinks JavaScript
+  kind: on-page script
+  loader: https://s.skimresources.com/js/{publisher_id}.skimlinks.js
+  generic_loader: https://s.skimresources.com/js/skimlinks.js
+  description: >-
+    The Skimlinks on-page script. Once added to a site's template it rewrites
+    eligible outbound merchant links to affiliated links at click time and
+    reports clicks and impressions back to Skimlinks. Publishers obtain their
+    site-specific script from the Publisher Hub.
+  capabilities:
+  - Automatic affiliation of existing outbound merchant links (Skimlinks)
+  - Keyword-to-link conversion (Skimwords)
+  - Click and page-impression tracking
+  - xcust custom tracking passthrough
+- name: Link Wrapper (go.skimresources.com)
+  kind: link redirect service
+  pattern: https://go.skimresources.com/?id={publisher_id}X{site_id}&url={target_url}&xcust={custom_id}
+  description: >-
+    The redirect endpoint used to manually create affiliated links (also emitted
+    as affiliated_url by the Product Key API). Documented on the developer
+    portal's Link Wrapper page.
+  docs: https://developers.skimlinks.com/link.html

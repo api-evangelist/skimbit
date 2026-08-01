@@ -1,0 +1,212 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/skimbit-merchant-openapi.yml, openapi/skimbit-product-key-openapi.yml, openapi/skimbit-reporting-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 19
+  by_action_class:
+    connected: 18
+    acting: 1
+  by_consequence:
+    read: 18
+    write: 1
+  human_in_the_loop_required: 0
+operations:
+- path: /v4/publisher/{publisher_id}/merchants
+  method: get
+  operationId: listMerchants
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v4/publisher/{publisher_id}/domains
+  method: get
+  operationId: listDomains
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v4/verticals
+  method: get
+  operationId: listVerticals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v4/alternative_verticals
+  method: get
+  operationId: listAlternativeVerticals
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v4/publisher/{publisher_id}/offers
+  method: get
+  operationId: listOffers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/product
+  method: get
+  operationId: getProduct
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/publisher/{publisher_id}/products
+  method: post
+  operationId: getMultiProducts
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /publisher/{publisher_id}/commission-report
+  method: get
+  operationId: searchCommissions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/reports
+  method: get
+  operationId: getAggregatedReports
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/aggregation/v1/link-report
+  method: get
+  operationId: getLinkReport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/aggregation/v1/link-report/dimensions
+  method: get
+  operationId: getLinkReportDimensions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/aggregation/v1/link-report/metrics
+  method: get
+  operationId: getLinkReportMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/aggregation/v1/page-report
+  method: get
+  operationId: getPageReport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/aggregation/v1/page-report/dimensions
+  method: get
+  operationId: getPageReportDimensions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/aggregation/v1/page-report/metrics
+  method: get
+  operationId: getPageReportMetrics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/trending-products
+  method: get
+  operationId: getTrendingProducts
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/product-report
+  method: get
+  operationId: getProductBoughtReport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/payment-status
+  method: get
+  operationId: getPaymentStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /publisher/{publisher_id}/deactivated-merchants
+  method: get
+  operationId: getDeactivatedMerchants
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none

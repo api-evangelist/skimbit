@@ -1,0 +1,60 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: >-
+  Derived from the Skimlinks OpenAPI operations. No official hosted/remote
+  Skimlinks MCP server was found in the docs, the npm @modelcontextprotocol
+  scope, or public MCP registries as of the generated date.
+server:
+  name: skimlinks
+  transport: http
+  description: >-
+    Candidate MCP tool surface mapping the read operations of the Skimlinks
+    Merchant, Reporting and Product Key APIs. Each tool wraps one operationId;
+    all require a Skimlinks access_token minted from client credentials.
+tools:
+- name: list_merchants
+  description: List / search Skimlinks merchant programs available to a publisher.
+  source_operation: openapi/skimbit-merchant-openapi.yml#listMerchants
+- name: list_domains
+  description: List a publisher's monetizable merchant domains.
+  source_operation: openapi/skimbit-merchant-openapi.yml#listDomains
+- name: list_verticals
+  description: List Skimlinks verticals and vertical groups.
+  source_operation: openapi/skimbit-merchant-openapi.yml#listVerticals
+- name: list_alternative_verticals
+  description: List Skimlinks alternative vertical taxonomies.
+  source_operation: openapi/skimbit-merchant-openapi.yml#listAlternativeVerticals
+- name: list_offers
+  description: List / search merchant offers (coupons, deals, promotions).
+  source_operation: openapi/skimbit-merchant-openapi.yml#listOffers
+- name: search_commissions
+  description: Search raw commission data for a publisher.
+  source_operation: openapi/skimbit-reporting-openapi.yml#searchCommissions
+- name: get_aggregated_reports
+  description: Get aggregated performance reports grouped by a dimension.
+  source_operation: openapi/skimbit-reporting-openapi.yml#getAggregatedReports
+- name: get_link_report
+  description: Get multi-aggregated click-level performance report (NDJSON).
+  source_operation: openapi/skimbit-reporting-openapi.yml#getLinkReport
+- name: get_page_report
+  description: Get multi-aggregated page-impression report (NDJSON).
+  source_operation: openapi/skimbit-reporting-openapi.yml#getPageReport
+- name: get_trending_products
+  description: Get products trending across the Skimlinks network for a publisher.
+  source_operation: openapi/skimbit-reporting-openapi.yml#getTrendingProducts
+- name: get_product_bought_report
+  description: Get the products-bought report for a publisher.
+  source_operation: openapi/skimbit-reporting-openapi.yml#getProductBoughtReport
+- name: get_payment_status
+  description: Get invoice and commission payment status.
+  source_operation: openapi/skimbit-reporting-openapi.yml#getPaymentStatus
+- name: get_deactivated_merchants
+  description: List deactivated merchants and their recent clicks/revenue.
+  source_operation: openapi/skimbit-reporting-openapi.yml#getDeactivatedMerchants
+- name: get_product
+  description: Get product details and merchant alternatives for one product.
+  source_operation: openapi/skimbit-product-key-openapi.yml#getProduct
+- name: get_multi_products
+  description: Get product details and alternatives for multiple products.
+  source_operation: openapi/skimbit-product-key-openapi.yml#getMultiProducts

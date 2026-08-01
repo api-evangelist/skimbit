@@ -1,0 +1,21 @@
+generated: '2026-07-21'
+method: searched
+description: >-
+  Probe of the /.well-known/ discovery surface across the Skimlinks website and
+  API hosts. No discovery documents were served (all probes returned 404/405 or
+  did not resolve), so no WellKnown/SecurityTxt pointer is wired. Absence is
+  recorded as valid data.
+hosts:
+- host: https://www.skimlinks.com
+  documents:
+  - { path: /.well-known/security.txt, status: 404 }
+- host: https://api.skimlinks.com
+  documents:
+  - { path: /.well-known/security.txt, status: 410 }
+- host: https://authentication.skimapis.com
+  documents:
+  - { path: /.well-known/openid-configuration, status: 405 }
+  - { path: /.well-known/oauth-authorization-server, status: 405 }
+- host: https://skimapis.com
+  documents:
+  - { path: /.well-known/security.txt, status: 0, note: apex host does not resolve (subdomains only) }

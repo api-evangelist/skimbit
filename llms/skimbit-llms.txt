@@ -1,0 +1,38 @@
+# Skimlinks (SkimBit Ltd)
+
+> Skimlinks is a content-monetization and affiliate-marketing platform (part of Taboola) that helps publishers earn commerce revenue from the merchants and products they mention in editorial content. It exposes publisher-facing REST APIs for merchants, reporting and products, an on-page JavaScript monetization script, and a batch Data Pipe for event-level data.
+
+Authentication: all APIs use a timestamp-based `access_token` passed as a query parameter, minted by POSTing your `client_id` and `client_secret` (from the Publisher Hub) with `grant_type=client_credentials` to https://authentication.skimapis.com/access_token. Rate limits are per-endpoint and return HTTP 429 when exceeded.
+
+## APIs
+
+- [Merchant API](https://developers.skimlinks.com/merchant.html): merchant programs, monetizable domains, verticals and offers. Host https://merchants.skimapis.com
+- [Reporting API](https://developers.skimlinks.com/reporting.html): commissions, aggregated performance, link/page NDJSON reports, trending products, products bought, payment status, deactivated merchants. Host https://reporting.skimapis.com
+- [Product Key API](https://developers.skimlinks.com/product-key.html): product details, pricing, availability and merchant alternatives across 1B+ product offers. Host https://products.skimapis.com
+
+## Specs
+
+- [Merchant OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-merchant-openapi.yml)
+- [Reporting OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-reporting-openapi.yml)
+- [Product Key OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-product-key-openapi.yml)
+
+## Artifacts
+
+- [Authentication profile](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/authentication/skimbit-authentication.yml)
+- [API conventions](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/conventions/skimbit-conventions.yml)
+- [Rate limits](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/rate-limits/skimbit-rate-limits.yml)
+- [Error catalog](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/errors/skimbit-problem-types.yml)
+- [Lifecycle & deprecation](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/lifecycle/skimbit-lifecycle.yml)
+- [Data model](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/data-model/skimbit-data-model.yml)
+- [Embedded components](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/components/skimbit-components.yml)
+
+## Docs
+
+- [Developer portal](https://developers.skimlinks.com)
+- [Link Wrapper](https://developers.skimlinks.com/link.html)
+- [Skimlinks JavaScript](https://developers.skimlinks.com/skimlinks-script.html)
+- [Data Pipe](https://developers.skimlinks.com/data-pipe.html)
+- [Publisher Hub (login)](https://hub.skimlinks.com/login)
+- [Sign up](https://signup.skimlinks.com/)
+- [Support / help center](https://support.skimlinks.com/hc/en-us)
+- [Blog / insights](https://www.skimlinks.com/insights/)

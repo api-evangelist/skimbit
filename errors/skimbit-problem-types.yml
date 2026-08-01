@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  openapi/skimbit-merchant-openapi.yml, openapi/skimbit-reporting-openapi.yml,
+  openapi/skimbit-product-key-openapi.yml, and the rate-limiting sections of
+  https://developers.skimlinks.com/reporting.html
+format: http-status
+description: >-
+  Skimlinks does not publish an RFC 9457 problem+json error registry; errors are
+  signalled with standard HTTP status codes and plain JSON bodies. The most
+  explicitly documented failure mode is rate limiting (429). The entries below
+  are derived from the OpenAPI responses and the documented rate-limit behaviour.
+problems:
+- status: 429
+  title: Too Many Requests
+  description: >-
+    The endpoint's per-API-key (and, on Reporting endpoints, per-IP) rate limit
+    was exceeded. Back off and retry within the documented windows.
+  remediation: >-
+    Respect the per-endpoint limits in rate-limits/skimbit-rate-limits.yml;
+    reduce request frequency, or contact your account manager to raise the
+    limits. Managed publishers hitting Reporting limits should consider the
+    Data Pipe batch export.
+  source_operations:
+  - openapi/skimbit-merchant-openapi.yml#listMerchants
+  - openapi/skimbit-reporting-openapi.yml#searchCommissions
+  - openapi/skimbit-product-key-openapi.yml#getProduct
+- status: 401
+  title: Unauthorized
+  description: >-
+    Missing, malformed or expired access_token. Access tokens are timestamp-based
+    and expire (expiry_timestamp is returned when minting the token).
+  remediation: Mint a fresh access_token from https://authentication.skimapis.com/access_token.
+- status: 400
+  title: Bad Request
+  description: Missing a required parameter (e.g. publisher_domain_id) or an invalid parameter value.
+  remediation: Check required parameters and enum values for the operation.

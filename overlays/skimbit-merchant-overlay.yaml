@@ -1,0 +1,15 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Skimlinks merchant API
+  version: 1.0.0
+extends: openapi/skimbit-merchant-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-21'
+      x-apievangelist-source: https://developers.skimlinks.com/merchant.html
+      x-apievangelist-notes: >-
+        Converted faithfully from the Skimlinks Apiary API Blueprint. Auth is a
+        timestamp-based access_token query parameter minted via client_credentials
+        at https://authentication.skimapis.com/access_token; rate limits are
+        per-endpoint returning HTTP 429.

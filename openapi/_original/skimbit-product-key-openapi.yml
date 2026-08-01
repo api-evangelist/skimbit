@@ -1,0 +1,191 @@
+openapi: 3.0.3
+info:
+  title: Skimlinks Product Key API
+  version: v2
+  description: >-
+    Product Key helps publishers build commerce experiences and power content
+    on their website or platform. Publishers can research product details or
+    build widgets, buy buttons, shop pages, merchant storefronts and wishlists
+    using access to the latest product information (names, pricing, discounts,
+    stock, images) for more than one billion product offers globally. Data is
+    available for publishers in the US, UK, Germany, France and Australia.
+
+
+    Authentication: this API is available on request only — ask your account
+    manager for a dedicated `client_id` and `client_secret`, then obtain a
+    timestamp-based `access_token` from
+    `https://authentication.skimapis.com/access_token` via a client_credentials
+    grant and pass it as the `access_token` query parameter.
+
+
+    Rate limiting: the single-product endpoint defaults to 80 requests/min and
+    5000/hour; the multi-product endpoint defaults to 20 requests/min and
+    1000/hour. Contact your account manager to raise these.
+  contact:
+    name: Skimlinks Developer Support
+    url: https://developers.skimlinks.com/product-key.html
+  x-generated: '2026-07-21'
+  x-method: searched
+  x-source: https://developers.skimlinks.com/product-key.html (Apiary blueprint skimlinksproducts)
+servers:
+  - url: https://products.skimapis.com
+    description: Skimlinks Product Key API production host
+security:
+  - access_token: []
+tags:
+  - name: Products
+paths:
+  /publisher/{publisher_id}/product:
+    get:
+      operationId: getProduct
+      summary: Get product details and alternatives
+      description: >-
+        Query for a specific product (by product_url, upc, or product_id) and
+        get information plus alternative merchants offering the same product.
+        Default rate limit 80/min and 5000/hour.
+      tags: [Products]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+        - { name: publisher_domain_id, in: query, required: true, schema: { type: integer } }
+        - { name: product_url, in: query, schema: { type: string }, description: The product URL to query. }
+        - { name: product_keywords, in: query, schema: { type: string } }
+        - { name: upc, in: query, schema: { type: string } }
+        - { name: product_id, in: query, schema: { type: string } }
+        - { name: product_id_type, in: query, schema: { type: string, enum: [upc, asin], default: upc } }
+        - { name: merchant_type, in: query, schema: { type: string } }
+        - { name: domains, in: query, schema: { type: string }, description: Pipe-separated domains to filter alternatives. }
+        - { name: exclude_domains, in: query, schema: { type: string } }
+        - { name: referrer_url, in: query, schema: { type: string } }
+        - { name: per_merchant_limit, in: query, schema: { type: integer, default: 1 } }
+        - { name: alternatives_size, in: query, schema: { type: integer } }
+        - { name: country_code, in: query, schema: { type: string } }
+        - { name: alternative_country_code, in: query, schema: { type: string } }
+        - { name: sort_by, in: query, schema: { type: string } }
+        - { name: sort_desc, in: query, schema: { type: string, enum: [asc, desc], default: desc } }
+      responses:
+        '200':
+          description: Product details plus alternatives.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product_details: { $ref: '#/components/schemas/Product' }
+                  product_alternatives:
+                    type: array
+                    items: { $ref: '#/components/schemas/Product' }
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /v1/publisher/{publisher_id}/products:
+    post:
+      operationId: getMultiProducts
+      summary: Get multiple product details and alternatives
+      description: >-
+        Query multiple product URLs (or product ids) at once and get information
+        and alternatives for each. Default rate limit 20/min and 1000/hour.
+      tags: [Products]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+        - { name: publisher_domain_id, in: query, required: true, schema: { type: integer } }
+        - { name: merchant_type, in: query, schema: { type: string } }
+        - { name: domains, in: query, schema: { type: string } }
+        - { name: exclude_domains, in: query, schema: { type: string } }
+        - { name: referrer_url, in: query, schema: { type: string } }
+        - { name: per_merchant_limit, in: query, schema: { type: integer, default: 1 } }
+        - { name: alternatives_size, in: query, schema: { type: integer } }
+        - { name: country_code, in: query, schema: { type: string } }
+        - { name: alternative_country_code, in: query, schema: { type: string } }
+        - { name: sort_by, in: query, schema: { type: string } }
+        - { name: sort_desc, in: query, schema: { type: string, enum: [asc, desc], default: desc } }
+        - { name: product_id_type, in: query, schema: { type: string, enum: [upc, asin], default: upc } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_urls:
+                  type: array
+                  items: { type: string }
+                  description: The product URLs to query.
+                product_ids:
+                  type: array
+                  items: { type: string }
+                  description: Product ids (UPC/ASIN), required if product_urls is not passed.
+            example:
+              product_urls:
+                - https://www.example-merchant.com/product/1
+                - https://www.example-merchant.com/product/2
+      responses:
+        '200':
+          description: Keyed results of products with alternatives.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items: { $ref: '#/components/schemas/Product' }
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  securitySchemes:
+    access_token:
+      type: apiKey
+      in: query
+      name: access_token
+      description: >-
+        Timestamp-based access token obtained from
+        https://authentication.skimapis.com/access_token via a
+        client_credentials grant using a Product-Key-specific client_id and
+        client_secret (available on request).
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded. Returns 429 Too Many Requests.
+  schemas:
+    Product:
+      type: object
+      properties:
+        advertiser_id: { type: string }
+        commission_rate: { type: number }
+        conversion_rate: { type: number }
+        ecpc: { type: number }
+        country: { type: string }
+        currency: { type: string }
+        description: { type: string, nullable: true }
+        ean: { type: string, nullable: true }
+        gtin: { type: string, nullable: true }
+        upc: { type: string, nullable: true }
+        sku: { type: string, nullable: true }
+        google_category_id: { type: string, nullable: true }
+        is_available: { type: boolean }
+        latest_availability: { type: boolean, nullable: true }
+        latest_price: { type: number, nullable: true }
+        latest_ts_updated: { type: string, nullable: true }
+        merchant_logo: { type: string }
+        merchant_name: { type: string }
+        original_currency: { type: string }
+        original_price: { type: number, nullable: true }
+        price: { type: number }
+        product_brand: { type: string, nullable: true }
+        product_name: { type: string }
+        product_images:
+          type: array
+          items:
+            type: object
+            properties:
+              value: { type: string }
+              xsize: { type: integer, nullable: true }
+              ysize: { type: integer, nullable: true }
+        url_normalized: { type: string }
+        urls:
+          type: object
+          properties:
+            affiliated_url: { type: string }
+            product_url: { type: string }

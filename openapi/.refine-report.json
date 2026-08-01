@@ -1,0 +1,28 @@
+{
+  "provider": "skimbit",
+  "sources": [
+    "skimbit-commissions-api-openapi.yml",
+    "skimbit-domains-api-openapi.yml",
+    "skimbit-merchants-api-openapi.yml",
+    "skimbit-offers-api-openapi.yml",
+    "skimbit-payments-api-openapi.yml",
+    "skimbit-products-api-openapi.yml",
+    "skimbit-reports-api-openapi.yml",
+    "skimbit-verticals-api-openapi.yml"
+  ],
+  "outputs": [
+    "skimbit-commissions-api-openapi.yml",
+    "skimbit-domains-api-openapi.yml",
+    "skimbit-merchants-api-openapi.yml",
+    "skimbit-offers-api-openapi.yml",
+    "skimbit-payments-api-openapi.yml",
+    "skimbit-products-api-openapi.yml",
+    "skimbit-reports-api-openapi.yml",
+    "skimbit-verticals-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

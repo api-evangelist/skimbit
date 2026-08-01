@@ -1,0 +1,31 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  openapi/skimbit-merchant-openapi.yml, openapi/skimbit-reporting-openapi.yml,
+  openapi/skimbit-product-key-openapi.yml
+description: >-
+  Cross-cutting standards conformance derived from the Skimlinks OpenAPI specs
+  and developer documentation. Skimlinks is a proprietary affiliate/commerce
+  API and does not claim formal industry certifications in its developer docs.
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: Repository provides OpenAPI 3.0.3 descriptions for all three published APIs.
+- id: oauth2-client-credentials
+  conforms: partial
+  evidence: >-
+    Uses a client_credentials-style token exchange (client_id/client_secret ->
+    access_token) but the resulting token is passed as a query parameter, not as
+    an RFC 6750 Bearer token, and no OAuth discovery metadata is published.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use plain HTTP status codes and JSON, not application/problem+json.
+- id: ndjson-streaming
+  conforms: true
+  evidence: Multi-aggregated Reporting endpoints stream application/x-ndjson with X-Count/X-Has-Next headers.
+- id: rest-json
+  conforms: true
+  evidence: JSON request/response over HTTPS with resource-oriented paths.
+- id: rate-limiting-429
+  conforms: true
+  evidence: Documented per-endpoint rate limits returning HTTP 429.

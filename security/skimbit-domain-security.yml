@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: skimlinks.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan  5 23:59:59 2027 GMT
+  hsts: true
+  hsts_max_age: 31557600
+- host: developers.skimlinks.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep  2 10:05:29 2026 GMT
+  hsts: false
+- host: merchants.skimapis.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  6 20:53:38 2026 GMT
+  hsts: null
+domains:
+- domain: skimlinks.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: skimapis.com
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false

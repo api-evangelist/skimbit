@@ -1,0 +1,433 @@
+openapi: 3.0.3
+info:
+  title: Skimlinks Reporting API
+  version: v1
+  description: >-
+    The Skimlinks Reporting API gives publishers aggregated and individual
+    commission-level access to their site's performance data: raw commissions,
+    aggregated performance reports, multi-aggregated link and page reports
+    (streamed as NDJSON), trending products, products bought, payment status,
+    and deactivated merchants. All revenue figures are converted to the
+    publisher's preferred currency using OpenExchangeRates daily conversion
+    rates.
+
+
+    Authentication: every request requires a temporary, timestamp-based
+    `access_token` query parameter obtained by POSTing your `client_id` and
+    `client_secret` with `grant_type=client_credentials` to
+    `https://authentication.skimapis.com/access_token`.
+
+
+    Rate limiting varies per endpoint (documented per operation). Exceeding a
+    limit returns `429 Too Many Requests`. The multi-aggregated endpoints stream
+    responses in NDJSON with `X-Count` and `X-Has-Next` pagination headers; the
+    rest return standard JSON with an `offset`/`limit`/`has_next` pagination
+    object.
+  contact:
+    name: Skimlinks Developer Support
+    url: https://developers.skimlinks.com/reporting.html
+  x-generated: '2026-07-21'
+  x-method: searched
+  x-source: https://developers.skimlinks.com/reporting.html (Apiary blueprint skimlinksreporting)
+servers:
+  - url: https://reporting.skimapis.com
+    description: Skimlinks Reporting API production host
+security:
+  - access_token: []
+tags:
+  - name: Commissions
+  - name: Reports
+  - name: Products
+  - name: Payments
+paths:
+  /publisher/{publisher_id}/commission-report:
+    get:
+      operationId: searchCommissions
+      summary: Search commissions
+      description: >-
+        Query Skimlinks' raw commission data between two dates, or list all
+        commissions changed since a point in time via `updated_since`. Limited
+        to 40 requests/min and 300/hour per API key (80/min, 500/hour, 1000/day
+        per IP).
+      tags: [Commissions]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, default: 30, minimum: 1, maximum: 5000 } }
+        - { name: offset, in: query, schema: { type: integer } }
+        - { name: start_date, in: query, schema: { type: string, format: date-time } }
+        - { name: end_date, in: query, schema: { type: string, format: date-time } }
+        - { name: updated_since, in: query, schema: { type: string, format: date-time } }
+        - { name: custom_id, in: query, schema: { type: string }, description: Filter by xcust custom click id. }
+        - { name: merchant_id, in: query, schema: { type: integer } }
+        - { name: a_id, in: query, schema: { type: integer } }
+        - { name: domain_id, in: query, schema: { type: integer } }
+        - { name: sort_dir, in: query, schema: { type: string, enum: [DESC, ASC] } }
+        - { name: sort_by, in: query, schema: { type: string, enum: [id, transaction_date] } }
+        - { name: commission_id, in: query, schema: { type: string } }
+        - { name: status, in: query, schema: { type: string, enum: [active, cancelled] } }
+        - { name: commission_type, in: query, schema: { type: string, enum: [CPA, CPC, CPL, Flat-fee, Performance] } }
+      responses:
+        '200':
+          description: Commission records with pagination.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+                  commissions:
+                    type: array
+                    items: { $ref: '#/components/schemas/Commission' }
+              example:
+                pagination: { has_next: true, total_count: 236, offset: 0, limit: 10 }
+                commissions:
+                  - commission_id: 123
+                    transaction_details:
+                      basket: { items: 1, publisher_amount: 0.35, order_amount: 8.69, currency: GBP, commission_type: CPC }
+                      status: active
+                      payment_status: paid
+                      transaction_date: '2017-03-01 15:15:00'
+                    merchant_details: { merchant_name: Maplin Electronics Ltd, merchant_id: 8212, advertiser_id: 124 }
+                    publisher_id: 1
+                    publisher_domain_id: 2
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /publisher/{publisher_id}/reports:
+    get:
+      operationId: getAggregatedReports
+      summary: Get aggregated performance reports
+      description: >-
+        Query the Hub Performance report data aggregated by page, date, device,
+        country, domain, link, merchant or network_payout_type. Limited to 40
+        requests/min and 500/hour per API key.
+      tags: [Reports]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+        - name: report_by
+          in: query
+          required: true
+          schema: { type: string, enum: [page, date, device, country, domain, link, merchant, network_payout_type] }
+        - { name: start_date, in: query, required: true, schema: { type: string, format: date } }
+        - { name: end_date, in: query, required: true, schema: { type: string, format: date } }
+        - { name: limit, in: query, schema: { type: integer, default: 30, minimum: 1, maximum: 600 } }
+        - { name: offset, in: query, schema: { type: integer } }
+        - name: sort_by
+          in: query
+          schema: { type: string, enum: [impressions, clicks_affiliated, order_amount, publisher_commission_amount, sales, page_url, isodate, device_type, user_ip_country, domain, merchant_name, target_url] }
+        - { name: sort_dir, in: query, schema: { type: string, enum: [DESC, ASC] } }
+        - { name: time_period, in: query, schema: { type: string, enum: [day, week, month] } }
+        - { name: currency, in: query, schema: { type: string }, description: ISO 4217 currency code. }
+        - { name: a_id, in: query, schema: { type: integer } }
+        - { name: domain_id, in: query, schema: { type: integer } }
+        - { name: page_search, in: query, schema: { type: string } }
+        - { name: link_search, in: query, schema: { type: string } }
+        - { name: merchant_search, in: query, schema: { type: string } }
+        - { name: user_ip_countries, in: query, schema: { type: string } }
+        - { name: payment_type, in: query, schema: { type: string, enum: [affiliate, flatfee] } }
+        - { name: timezone, in: query, schema: { type: string } }
+      responses:
+        '200':
+          description: Aggregated report rows plus totals.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count: { type: integer }
+                  reports: { type: array, items: { type: object } }
+                  totals: { type: object }
+              example:
+                count: 1
+                reports:
+                  - { publisher_commission_amount: 8.27, clicks_affiliated: 754, sales: 3, isodate: '2018-02-15/2018-02-15', impressions: 23402, order_amount: 130.97 }
+                totals: { publisher_commission_amount: 8.27, clicks_affiliated: 754, sales: 3 }
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /publisher/{publisher_id}/aggregation/v1/link-report:
+    get:
+      operationId: getLinkReport
+      summary: Multi-aggregated link report (NDJSON)
+      description: >-
+        Fetch click-level performance report data grouped by up to 4 dimensions
+        with selected sum metrics. Streamed as NDJSON with X-Count / X-Has-Next
+        headers. Limited to 5 requests/min and 100/hour per API key.
+      tags: [Reports]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+        - { name: start_date, in: query, required: true, schema: { type: string, format: date } }
+        - { name: end_date, in: query, required: true, schema: { type: string, format: date } }
+        - { name: limit, in: query, schema: { type: integer, default: 50000, minimum: 10000, maximum: 100000 } }
+        - { name: offset, in: query, schema: { type: integer } }
+        - name: dim
+          in: query
+          required: true
+          description: Dimension(s) to group by (repeatable, up to 4).
+          schema: { type: array, items: { type: string, enum: [advertiser_id, date, device_type, merchant_id, page_url, platform_id, publisher_domain_id, skim_product_id, target_url, user_ip_country] } }
+        - name: met
+          in: query
+          required: true
+          description: Metric(s) to include (repeatable).
+          schema: { type: array, items: { type: string, enum: [clicks_count_total, items_count, order_amount_eur, order_amount_gbp, order_amount_usd, order_amount, publisher_commission_amount_eur, publisher_commission_amount_gbp, publisher_commission_amount_usd, publisher_commission_amount, sales_total] } }
+        - { name: currency, in: query, schema: { type: string } }
+      responses:
+        '200':
+          description: NDJSON stream of aggregated rows.
+          content:
+            application/x-ndjson:
+              schema: { type: string }
+              example: |
+                {"device_type": "mobile", "publisher_commission_amount_gbp": 100.00}
+                {"device_type": "pc", "publisher_commission_amount_gbp": 34.56}
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /publisher/{publisher_id}/aggregation/v1/link-report/dimensions:
+    get:
+      operationId: getLinkReportDimensions
+      summary: List available link-report dimensions
+      tags: [Reports]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+      responses:
+        '200': { description: List of dimensions. }
+  /publisher/{publisher_id}/aggregation/v1/link-report/metrics:
+    get:
+      operationId: getLinkReportMetrics
+      summary: List available link-report metrics
+      tags: [Reports]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+      responses:
+        '200': { description: List of metrics. }
+  /publisher/{publisher_id}/aggregation/v1/page-report:
+    get:
+      operationId: getPageReport
+      summary: Multi-aggregated page report (NDJSON)
+      description: >-
+        Fetch page-impression level performance report data grouped by selected
+        dimensions and sum metrics. Streamed as NDJSON with X-Count / X-Has-Next
+        headers. Limited to 5 requests/min and 100/hour per API key.
+      tags: [Reports]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+        - { name: start_date, in: query, required: true, schema: { type: string, format: date } }
+        - { name: end_date, in: query, required: true, schema: { type: string, format: date } }
+        - { name: limit, in: query, schema: { type: integer, default: 50000, minimum: 10000, maximum: 100000 } }
+        - { name: offset, in: query, schema: { type: integer } }
+        - name: dim
+          in: query
+          required: true
+          schema: { type: array, items: { type: string, enum: [date, device_type, page_url, platform_id, publisher_domain_id] } }
+        - name: met
+          in: query
+          required: true
+          schema: { type: array, items: { type: string, enum: [clicks_count_total, impressions_count_total, items_count, order_amount_eur, order_amount_gbp, order_amount_usd, publisher_commission_amount_eur, publisher_commission_amount_gbp, publisher_commission_amount_usd, sales_total] } }
+      responses:
+        '200':
+          description: NDJSON stream of aggregated rows.
+          content:
+            application/x-ndjson:
+              schema: { type: string }
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /publisher/{publisher_id}/aggregation/v1/page-report/dimensions:
+    get:
+      operationId: getPageReportDimensions
+      summary: List available page-report dimensions
+      tags: [Reports]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+      responses:
+        '200': { description: List of dimensions. }
+  /publisher/{publisher_id}/aggregation/v1/page-report/metrics:
+    get:
+      operationId: getPageReportMetrics
+      summary: List available page-report metrics
+      tags: [Reports]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+      responses:
+        '200': { description: List of metrics. }
+  /publisher/{publisher_id}/trending-products:
+    get:
+      operationId: getTrendingProducts
+      summary: Get trending products
+      description: >-
+        Insights into products trending across the Skimlinks network that the
+        publisher has not yet featured. Click data updates hourly; sales
+        information available for the past 7 and 30 days.
+      tags: [Products]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+        - { name: period, in: query, required: true, schema: { type: string, enum: [today, 7_days, 30_days] } }
+        - { name: limit, in: query, schema: { type: integer, default: 30, minimum: 1, maximum: 600 } }
+        - { name: offset, in: query, schema: { type: integer } }
+        - { name: sort_by, in: query, schema: { type: string, enum: [popular_rank, trending_rank] } }
+        - { name: sort_dir, in: query, schema: { type: string, enum: [DESC, ASC] } }
+        - { name: a_id, in: query, schema: { type: integer } }
+        - { name: country_code, in: query, schema: { type: string } }
+        - { name: audience_country_code, in: query, schema: { type: string } }
+        - { name: vertical_id, in: query, schema: { type: integer } }
+        - { name: product_search, in: query, schema: { type: string } }
+      responses:
+        '200':
+          description: Trending products with pagination.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+                  reports: { type: array, items: { type: object } }
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /publisher/{publisher_id}/product-report:
+    get:
+      operationId: getProductBoughtReport
+      summary: Get products bought report
+      description: >-
+        Insights about the products readers purchased after clicking through
+        commerce content, including SKU, quantity, order value and revenue.
+        Features data from Awin, CJ, Rakuten, Impact, Partnerize and Pepperjam
+        networks only.
+      tags: [Products]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+        - { name: start_date, in: query, required: true, schema: { type: string, format: date } }
+        - { name: end_date, in: query, required: true, schema: { type: string, format: date } }
+        - { name: limit, in: query, schema: { type: integer, default: 30, minimum: 1, maximum: 600 } }
+        - { name: offset, in: query, schema: { type: integer } }
+        - { name: sort_by, in: query, schema: { type: string, enum: [quantity, order_amount, publisher_commission_amount] } }
+        - { name: sort_dir, in: query, schema: { type: string, enum: [DESC, ASC] } }
+        - { name: currency, in: query, schema: { type: string } }
+        - { name: product_search, in: query, schema: { type: string } }
+        - { name: domain_id, in: query, schema: { type: integer } }
+      responses:
+        '200':
+          description: Products bought with pagination.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page_report: { type: array, items: { type: object } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /publisher/{publisher_id}/payment-status:
+    get:
+      operationId: getPaymentStatus
+      summary: Get payment status report
+      description: Information about the publisher's invoices and their commissions.
+      tags: [Payments]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+        - { name: start_date, in: query, required: true, schema: { type: string, format: date } }
+        - { name: end_date, in: query, required: true, schema: { type: string, format: date } }
+        - { name: limit, in: query, schema: { type: integer, default: 30, minimum: 1, maximum: 600 } }
+        - { name: offset, in: query, schema: { type: integer } }
+        - { name: sort_by, in: query, schema: { type: string, enum: [transaction_date, payment_date, revenue] } }
+        - { name: sort_dir, in: query, schema: { type: string, enum: [DESC, ASC] } }
+        - { name: invoice_id, in: query, schema: { type: integer } }
+        - { name: payment_status, in: query, schema: { type: string, enum: [paid, unpaid] } }
+        - { name: payment_type, in: query, schema: { type: string, enum: [affiliate, flatfee] } }
+        - { name: saas_fee, in: query, schema: { type: string, enum: [only, without] } }
+      responses:
+        '200':
+          description: Payment status records with pagination.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  commissions: { type: array, items: { type: object } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+  /publisher/{publisher_id}/deactivated-merchants:
+    get:
+      operationId: getDeactivatedMerchants
+      summary: Get deactivated merchants report
+      description: Lists merchants that have been deactivated and aggregates clicks and revenue for the publisher over the recent period.
+      tags: [Reports]
+      parameters:
+        - { name: publisher_id, in: path, required: true, schema: { type: integer } }
+        - { name: access_token, in: query, required: true, schema: { type: string } }
+        - { name: sort_by, in: query, required: true, schema: { type: string, enum: [deactivated_date, clicks_affiliated, publisher_combined_commission_amount] } }
+        - { name: sort_dir, in: query, required: true, schema: { type: string, enum: [DESC, ASC] } }
+        - { name: limit, in: query, required: true, schema: { type: integer, default: 30, minimum: 0, maximum: 50000 } }
+        - { name: offset, in: query, required: true, schema: { type: integer } }
+        - { name: min_publisher_combined_commission_amount, in: query, required: true, schema: { type: number, default: 0.01 } }
+        - { name: domain_id, in: query, schema: { type: string } }
+        - { name: currency, in: query, schema: { type: string } }
+        - { name: timezone, in: query, schema: { type: string } }
+      responses:
+        '200':
+          description: Deactivated merchants with pagination.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reports: { type: array, items: { type: object } }
+                  pagination: { $ref: '#/components/schemas/Pagination' }
+components:
+  securitySchemes:
+    access_token:
+      type: apiKey
+      in: query
+      name: access_token
+      description: >-
+        Timestamp-based access token obtained from
+        https://authentication.skimapis.com/access_token via a
+        client_credentials grant using your client_id and client_secret.
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded. Returns 429 Too Many Requests.
+  schemas:
+    Pagination:
+      type: object
+      properties:
+        has_next: { type: boolean }
+        total_count: { type: integer }
+        offset: { type: integer }
+        limit: { type: integer }
+    Commission:
+      type: object
+      properties:
+        commission_id: { type: integer }
+        transaction_details:
+          type: object
+          properties:
+            aggregation_id: { type: string }
+            basket:
+              type: object
+              properties:
+                items: { type: integer }
+                publisher_amount: { type: number }
+                order_amount: { type: number }
+                currency: { type: string }
+                commission_type: { type: string }
+            status: { type: string }
+            payment_status: { type: string }
+            transaction_date: { type: string }
+            last_updated: { type: string }
+            invoice_id: { type: string }
+        merchant_details:
+          type: object
+          properties:
+            merchant_name: { type: string }
+            merchant_id: { type: integer }
+            advertiser_name: { type: string }
+            advertiser_id: { type: integer }
+        click_details: { type: object }
+        publisher_id: { type: integer }
+        publisher_domain_id: { type: integer }

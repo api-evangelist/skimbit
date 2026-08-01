@@ -1,0 +1,42 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://developers.skimlinks.com/merchant.html,
+  https://developers.skimlinks.com/reporting.html,
+  https://developers.skimlinks.com/product-key.html
+description: >-
+  Versioning and deprecation posture for the Skimlinks publisher APIs, derived
+  from the developer documentation. Skimlinks versions APIs in the URI path and
+  keeps prior major versions available while labelling them as legacy.
+versioning:
+  scheme: uri-path
+  current:
+    merchant: v4
+    reporting_aggregation: v1
+    product_key: v2
+  docs: https://developers.skimlinks.com/
+deprecation:
+  policy: >-
+    Skimlinks retains prior versions but marks them as legacy. The Merchant API
+    documents a full "OLD version" (v3) that authenticates with a public apikey
+    plus account_type/account_id; publishers are directed to the v4
+    access_token endpoints. Individual response fields are also deprecated in
+    place (e.g. merchant.merchant_id "Deprecated: please use advertiser_id
+    instead"; commission merchant_details.name/id deprecated in favour of
+    merchant_name/merchant_id).
+  deprecated_operations:
+  - description: Merchant API v3 List/Search Merchants (GET /v3/merchants)
+  - description: Merchant API v3 List Domains (GET /v3/domains)
+  - description: Merchant API v3 List Verticals (GET /v3/verticals)
+  - description: Merchant API v3 List/Search Offers (GET /v3/offers)
+  deprecated_fields:
+  - merchant.merchant_id (use advertiser_id)
+  - commission.merchant_details.name (use merchant_name)
+  - commission.merchant_details.id (use merchant_id)
+  sunset_header: false
+status_page: null
+sla: null
+notes: >-
+  No public status page or published SLA was found (status.skimlinks.com
+  resolves to a catch-all redirect, not a status dashboard). No RFC 8594
+  Sunset/Deprecation response headers are documented.

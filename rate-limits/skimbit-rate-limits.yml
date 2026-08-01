@@ -1,0 +1,67 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://developers.skimlinks.com/merchant.html,
+  https://developers.skimlinks.com/reporting.html,
+  https://developers.skimlinks.com/product-key.html
+description: >-
+  Skimlinks uses per-endpoint rate limiting to ensure stability for all clients.
+  Limits are enforced per API key, and some endpoints additionally apply a
+  per-IP-address ceiling. Exceeding a limit returns HTTP 429 Too Many Requests.
+signal:
+  status_code: 429
+  response: Too Many Requests
+rate_limits:
+- api: Merchant API
+  operation: listMerchants / listDomains / listOffers
+  scope: per api key
+  limit_count: 40
+  window: minute
+  additional:
+  - { limit_count: 1000, window: hour, scope: per api key }
+- api: Reporting API
+  operation: searchCommissions
+  scope: per api key
+  limit_count: 40
+  window: minute
+  additional:
+  - { limit_count: 300, window: hour, scope: per api key }
+  - { limit_count: 80, window: minute, scope: per ip }
+  - { limit_count: 500, window: hour, scope: per ip }
+  - { limit_count: 1000, window: day, scope: per ip }
+- api: Reporting API
+  operation: getAggregatedReports
+  scope: per api key
+  limit_count: 40
+  window: minute
+  additional:
+  - { limit_count: 500, window: hour, scope: per api key }
+  - { limit_count: 80, window: minute, scope: per ip }
+  - { limit_count: 500, window: hour, scope: per ip }
+  - { limit_count: 2000, window: day, scope: per ip }
+- api: Reporting API
+  operation: getLinkReport / getPageReport (multi-aggregated)
+  scope: per api key
+  limit_count: 5
+  window: minute
+  additional:
+  - { limit_count: 100, window: hour, scope: per api key }
+  - { limit_count: 10, window: minute, scope: per ip }
+  - { limit_count: 100, window: hour, scope: per ip }
+  - { limit_count: 500, window: day, scope: per ip }
+- api: Product Key API
+  operation: getProduct
+  scope: per api key
+  limit_count: 80
+  window: minute
+  additional:
+  - { limit_count: 5000, window: hour, scope: per api key }
+  note: Default limits; contact your account manager to increase.
+- api: Product Key API
+  operation: getMultiProducts
+  scope: per api key
+  limit_count: 20
+  window: minute
+  additional:
+  - { limit_count: 1000, window: hour, scope: per api key }
+  note: Default limits; contact your account manager to increase.

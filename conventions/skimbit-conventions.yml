@@ -1,0 +1,73 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://developers.skimlinks.com/merchant.html,
+  https://developers.skimlinks.com/reporting.html,
+  https://developers.skimlinks.com/product-key.html
+description: >-
+  Cross-cutting request/response conventions that apply across the Skimlinks
+  Merchant, Reporting and Product Key APIs: authentication style, pagination,
+  streaming, rate-limit signaling, versioning and the response envelope.
+base_urls:
+  merchant: https://merchants.skimapis.com
+  reporting: https://reporting.skimapis.com
+  products: https://products.skimapis.com
+  authentication: https://authentication.skimapis.com
+api_style: REST over HTTPS, JSON responses (NDJSON for streamed multi-aggregated reports)
+authentication:
+  scheme: Timestamp-based access_token passed as a query parameter
+  token_flow: client_credentials against https://authentication.skimapis.com/access_token
+  detail: authentication/skimbit-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    No idempotency-key mechanism is documented. The read APIs are inherently
+    idempotent GETs; the one write-style call (Product Key getMultiProducts) is
+    a POST used for batch retrieval, not resource mutation, and documents no
+    idempotency key.
+pagination:
+  style: offset
+  request_params:
+    limit: Number of rows to return (per-endpoint defaults and maxima)
+    offset: Zero-based row offset to start results from
+  response_fields:
+    standard_json:
+    - has_more / has_next (boolean, whether more results exist)
+    - num_returned / total_count
+    - next_val / last_val (cursor hints on some Merchant endpoints)
+    - pagination (object wrapping has_next/total_count/offset/limit on Reporting endpoints)
+  streaming:
+    formats: [application/x-ndjson]
+    endpoints:
+    - reporting getLinkReport
+    - reporting getPageReport
+    headers:
+      X-Count: Number of rows retrieved per query
+      X-Has-Next: Whether there is more data to retrieve (True/False)
+rate_limiting:
+  signal: HTTP 429 Too Many Requests
+  scope: per API key, with additional per-IP ceilings on Reporting endpoints
+  detail: rate-limits/skimbit-rate-limits.yml
+versioning:
+  scheme: uri-path
+  current:
+    merchant: v4
+    reporting: aggregation/v1 (unversioned base path for other reporting endpoints)
+    products: v2 (single) / v1 (multi)
+  deprecated:
+    merchant: v3 (labelled "OLD version", apikey/account_type/account_id auth)
+  detail: lifecycle/skimbit-lifecycle.yml
+error_envelope:
+  format: plain JSON / HTTP status codes (not RFC 9457 problem+json)
+  detail: errors/skimbit-problem-types.yml
+custom_tracking:
+  xcust: >-
+    An optional publisher-specified parameter (also called user_custom / custom_id)
+    passed through the Skimlinks monetisation engine and surfaced back in clicks,
+    commissions and product-purchase data for your own internal attribution.
+currency:
+  note: >-
+    Revenue figures are converted to the publisher's preferred currency using
+    OpenExchangeRates daily rates; a currency query parameter overrides the
+    default on several Reporting endpoints. Data Pipe revenue amounts are in
+    minor currency units.
