@@ -38,7 +38,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-13'
 tags:
 - Company
 - Affiliate Marketing
@@ -54,8 +54,8 @@ apis:
 - aid: skimbit:skimbit-commissions-api
   name: SkimBit Commissions API
   description: The Commissions API from SkimBit — 1 operation(s) for commissions.
-  humanURL: https://developers.skimlinks.com/merchant.html
-  baseURL: https://merchants.skimapis.com
+  humanURL: https://developers.skimlinks.com/reporting.html
+  baseURL: https://reporting.skimapis.com
   tags:
   - Commissions
   properties:
@@ -118,8 +118,8 @@ apis:
 - aid: skimbit:skimbit-payments-api
   name: SkimBit Payments API
   description: The Payments API from SkimBit — 1 operation(s) for payments.
-  humanURL: https://developers.skimlinks.com/merchant.html
-  baseURL: https://merchants.skimapis.com
+  humanURL: https://developers.skimlinks.com/reporting.html
+  baseURL: https://reporting.skimapis.com
   tags:
   - Payments
   properties:
@@ -134,8 +134,8 @@ apis:
 - aid: skimbit:skimbit-products-api
   name: SkimBit Products API
   description: The Products API from SkimBit — 4 operation(s) for products.
-  humanURL: https://developers.skimlinks.com/merchant.html
-  baseURL: https://merchants.skimapis.com
+  humanURL: https://developers.skimlinks.com/product-key.html
+  baseURL: https://products.skimapis.com
   tags:
   - Products
   properties:
@@ -150,8 +150,8 @@ apis:
 - aid: skimbit:skimbit-reports-api
   name: SkimBit Reports API
   description: The Reports API from SkimBit — 8 operation(s) for reports.
-  humanURL: https://developers.skimlinks.com/merchant.html
-  baseURL: https://merchants.skimapis.com
+  humanURL: https://developers.skimlinks.com/reporting.html
+  baseURL: https://reporting.skimapis.com
   tags:
   - Reports
   properties:
@@ -185,9 +185,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-13'
   status: enriched
-  artifacts_added: 23
+  artifacts_added: 4
   pass: local-v1
 common:
 - type: DomainSecurity
@@ -244,3 +244,13 @@ common:
   url: overlays/skimbit-reporting-overlay.yaml
 - type: Overlay
   url: overlays/skimbit-product-key-overlay.yaml
+- type: Packages
+  url: packages/skimbit-packages.yml
+- type: Plans
+  url: plans/skimbit-plans-pricing.yml
+- type: AsyncAPI
+  url: asyncapi/skimbit-data-pipe-asyncapi.yml
+- type: ToolCrosswalk
+  url: mcp/skimbit-tool-crosswalk.yml
+- type: Documentation
+  url: https://developers.skimlinks.com/data-pipe.html
