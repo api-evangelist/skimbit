@@ -1,0 +1,397 @@
+{
+  "item": [
+    {
+      "id": "8952647d-2ab4-4675-8579-aebab424bbaf",
+      "name": "Merchants",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "69e33290-2517-410e-8951-436a017b647f",
+          "name": "List / search merchants",
+          "request": {
+            "name": "List / search merchants",
+            "description": {
+              "content": "Returns the set of Skimlinks merchants available for the authenticated publisher. The merchants and rates returned depend on the specific publisher domain being queried; if `publisher_domain_id` is omitted the first registered domain is used.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "publisher",
+                ":publisher_id",
+                "merchants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) Timestamp-based access token from the authentication API."
+                },
+                {
+                  "disabled": false,
+                  "key": "publisher_domain_id",
+                  "value": "<integer>",
+                  "description": "(Required) Retrieve information for a specific domain id."
+                },
+                {
+                  "disabled": false,
+                  "key": "a_id",
+                  "value": "<integer>",
+                  "description": "Filter results by advertiser_id."
+                },
+                {
+                  "disabled": false,
+                  "key": "merchant_id",
+                  "value": "<integer>",
+                  "description": "Filter results by merchant_id."
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search query string."
+                },
+                {
+                  "disabled": false,
+                  "key": "vertical",
+                  "value": "<integer>",
+                  "description": "List merchants from one vertical only (vertical id)."
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "<string>",
+                  "description": "Two character country code."
+                },
+                {
+                  "disabled": false,
+                  "key": "alternative_vertical_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "alternative_vertical_taxonomy",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "alternative_vertical_country",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "favourite_type",
+                  "value": "<string>",
+                  "description": "Pass `favourite` to retrieve favourites only."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "200",
+                  "description": "Number of rows to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Paginate through results."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_dir",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) Your Publisher ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d2dd1ec4-86b2-4b79-bee3-4bf7c4f0cf4e",
+              "name": "A list of merchants for the publisher.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "publisher",
+                    ":publisher_id",
+                    "merchants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "publisher_domain_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "a_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merchant_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vertical",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "alternative_vertical_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "alternative_vertical_taxonomy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "alternative_vertical_country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "favourite_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) Your Publisher ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"user_currency\": \"EUR\",\n  \"merchants\": [\n    {\n      \"id\": 49697,\n      \"advertiser_id\": 49697,\n      \"name\": \"JCPenney\",\n      \"favourite\": false,\n      \"partner_type\": \"vip\",\n      \"domains\": [\n        \"jcpenney.com\",\n        \"jcp.com\"\n      ],\n      \"calculated_commission_rate\": 0.0586546,\n      \"calculated_ecpc\": 0.13564794348,\n      \"countries\": [\n        \"united states\"\n      ],\n      \"metadata\": {\n        \"logo\": \"https://static.skimlinks.com/images/merchant_logos/49697_82b0689aa62ee1d44a74a35faf50b668.png\",\n        \"description\": \"JCPenney is a shopping destination for home furnishings, apparel and accessories.\"\n      }\n    }\n  ],\n  \"last_val\": \"JCPenney\",\n  \"has_more\": false,\n  \"next_val\": null,\n  \"num_returned\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bfe0e18d-c3f1-408c-a647-3999cc9a0a28",
+              "name": "Rate limit exceeded (40 requests/min, 1000/hour per API key).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "publisher",
+                    ":publisher_id",
+                    "merchants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "publisher_domain_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "a_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "merchant_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "vertical",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "alternative_vertical_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "alternative_vertical_taxonomy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "alternative_vertical_country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "favourite_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "200"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) Your Publisher ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://merchants.skimapis.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "access_token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ad1cde68-7dc1-4813-970d-29001d702cb1",
+    "name": "Skimlinks Merchant Commissions Merchants API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher's monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.\n\nAuthentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.\n\nRate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.\n\nContact Support:\n Name: Skimlinks Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.skimlinks.com/terms-of-service/,
+  https://www.skimlinks.com/program-policies/,
+  https://www.skimlinks.com/preferred-partner-program/,
+  https://developers.skimlinks.com/
+description: >-
+  Skimlinks publishes no plans, tiers or price list for its APIs or for its
+  publisher platform. The Merchant, Reporting and Product Key APIs carry no
+  separate charge and no metered pricing — API access is a feature of a
+  Skimlinks publisher account, and the commercial relationship is a revenue
+  share whose actual percentage is disclosed only inside the login-protected
+  Publisher Hub. The full site was walked on the generated date: there is no
+  /pricing page, and the only numeric commercial terms Skimlinks publishes
+  anywhere are the payment mechanics in the Terms of Service.
+plan_count: 0
+plans: []
+pricing_model: revenue-share
+api_pricing:
+  metered: false
+  note: >-
+    No per-call, per-seat or tiered API pricing is published. Rate limits (see
+    rate-limits/skimbit-rate-limits.yml) are the only published consumption
+    ceiling, and the Product Key API docs say defaults are raised by contacting
+    an account manager rather than by upgrading a plan.
+published_commercial_terms:
+- term: Publisher Revenue
+  value: unpublished
+  detail: >-
+    Defined in the Terms of Service as "Publisher's share of the Total Revenue,
+    which may be viewed in the Publisher Hub". The share percentage itself is
+    never stated publicly.
+  source: https://www.skimlinks.com/terms-of-service/
+- term: Minimum payment threshold
+  value: USD 65 / GBP 50 / EUR 55 / JPY 8000 per month
+  detail: >-
+    Balances below the threshold are carried over and paid once the cumulative
+    amount due exceeds it (ToS clause 7.2).
+  source: https://www.skimlinks.com/terms-of-service/
+- term: Payment timing
+  value: within 92 days after month end, or 30 days after Skimlinks is paid, whichever is later
+  detail: ToS clause 7.1.
+  source: https://www.skimlinks.com/terms-of-service/
+- term: Referral program reward
+  value: 35% of Skimlinks' share of commission, for 12 months, capped at USD 20,000 per referred account
+  source: https://www.skimlinks.com/terms-of-service/
+- term: Preferred Partner (merchant side)
+  value: unpublished monthly fee
+  detail: >-
+    Described on the site as "Monthly fee gives you access to affiliate support
+    and exclusive benefits". No amount is published.
+  source: https://www.skimlinks.com/preferred-partner-program/
+- term: Data Pipe
+  value: unpublished, contract-negotiated
+  detail: >-
+    The batch event-data export is set up per customer ("we can agree on the
+    delivery file format"), with the download-egress cost charged to the
+    customer when Skimlinks owns the destination bucket. No list price.
+  source: https://developers.skimlinks.com/data-pipe.html
+evidence:
+- { url: 'https://www.skimlinks.com/pricing/', status: 404 }
+- { url: 'https://www.skimlinks.com/terms-of-service/', status: 200 }
+- { url: 'https://www.skimlinks.com/preferred-partner-program/', status: 200 }

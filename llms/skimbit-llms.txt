@@ -12,9 +12,17 @@ Authentication: all APIs use a timestamp-based `access_token` passed as a query 
 
 ## Specs
 
-- [Merchant OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-merchant-openapi.yml)
-- [Reporting OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-reporting-openapi.yml)
-- [Product Key OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-product-key-openapi.yml)
+One OpenAPI per resource (split from the three source specs, which remain verbatim under `openapi/_original/`).
+
+- [Merchants OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-merchants-api-openapi.yml) — host https://merchants.skimapis.com
+- [Domains OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-domains-api-openapi.yml) — host https://merchants.skimapis.com
+- [Verticals OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-verticals-api-openapi.yml) — host https://merchants.skimapis.com
+- [Offers OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-offers-api-openapi.yml) — host https://merchants.skimapis.com
+- [Commissions OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-commissions-api-openapi.yml) — host https://reporting.skimapis.com
+- [Reports OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-reports-api-openapi.yml) — host https://reporting.skimapis.com
+- [Payments OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-payments-api-openapi.yml) — host https://reporting.skimapis.com
+- [Products OpenAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/openapi/skimbit-products-api-openapi.yml) — host https://products.skimapis.com (two operations, trending-products and product-report, are served by https://reporting.skimapis.com and carry an operation-level `servers` override)
+- [Data Pipe AsyncAPI](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/asyncapi/skimbit-data-pipe-asyncapi.yml) — event-level clicks, page impressions, commissions and products purchased, delivered as daily Avro/CSV batches to a GCS or S3 bucket. Not a broker and not webhooks; Skimlinks publishes no AsyncAPI of its own, so this document was generated from the provider's published column reference.
 
 ## Artifacts
 
@@ -25,6 +33,21 @@ Authentication: all APIs use a timestamp-based `access_token` passed as a query 
 - [Lifecycle & deprecation](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/lifecycle/skimbit-lifecycle.yml)
 - [Data model](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/data-model/skimbit-data-model.yml)
 - [Embedded components](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/components/skimbit-components.yml)
+- [Packages / SDK survey](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/packages/skimbit-packages.yml)
+- [Plans & pricing](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/plans/skimbit-plans-pricing.yml)
+- [MCP tool crosswalk](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/mcp/skimbit-tool-crosswalk.yml)
+- [/.well-known probe](https://raw.githubusercontent.com/api-evangelist/skimbit/refs/heads/main/well-known/skimbit-well-known.yml)
+
+## What Skimlinks does not publish
+
+Recorded so an agent does not go looking. Each was probed on 2026-08-13.
+
+- No first-party SDK in any language, on any registry. The only client library on a registry is a community Ruby gem last released in 2013.
+- No hosted or stdio MCP server. `mcp/skimbit-mcp.yml` is a derived candidate tool surface (`deployment.mode: none`), not something you can connect to.
+- No A2A agent card. `/.well-known/agent-card.json` and `/.well-known/agent.json` miss on every host.
+- No `/.well-known/` documents at all — the API hosts answer 405 for every path, and hub.skimlinks.com answers 200 with an HTML login shell for every path, which is not a document.
+- No public pricing page, no status page, no changelog, no roadmap, no CLI, no sandbox or test mode, no public GitHub organization, no bug-bounty or vulnerability-disclosure program, no trust center.
+- No webhooks. Event-level data exists only as the batch Data Pipe export, arranged with Skimlinks directly.
 
 ## Docs
 

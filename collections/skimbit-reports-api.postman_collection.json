@@ -1,0 +1,1552 @@
+{
+  "item": [
+    {
+      "id": "90d16742-f80d-4e2c-a662-53a72a0546dd",
+      "name": "Reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6afdf0c2-f19d-49e2-80af-e4ab83f67178",
+          "name": "Get aggregated performance reports",
+          "request": {
+            "name": "Get aggregated performance reports",
+            "description": {
+              "content": "Query the Hub Performance report data aggregated by page, date, device, country, domain, link, merchant or network_payout_type. Limited to 40 requests/min and 500/hour per API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publisher",
+                ":publisher_id",
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "report_by",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "30"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_dir",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "time_period",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "<string>",
+                  "description": "ISO 4217 currency code."
+                },
+                {
+                  "disabled": false,
+                  "key": "a_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "domain_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_search",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "link_search",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "merchant_search",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "user_ip_countries",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "payment_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fc8d04e9-b68f-4f91-b2c4-c55110c7e3b2",
+              "name": "Aggregated report rows plus totals.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "30"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "time_period",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "a_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "domain_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "link_search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "merchant_search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_ip_countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1,\n  \"reports\": [\n    {\n      \"publisher_commission_amount\": 8.27,\n      \"clicks_affiliated\": 754,\n      \"sales\": 3,\n      \"isodate\": \"2018-02-15/2018-02-15\",\n      \"impressions\": 23402,\n      \"order_amount\": 130.97\n    }\n  ],\n  \"totals\": {\n    \"publisher_commission_amount\": 8.27,\n    \"clicks_affiliated\": 754,\n    \"sales\": 3\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fed00e96-fc02-478c-97b4-68344857a3d4",
+              "name": "Rate limit exceeded. Returns 429 Too Many Requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "report_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "30"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "time_period",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "a_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "domain_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "link_search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "merchant_search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "user_ip_countries",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "payment_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03167e19-597f-474d-989a-0812b817b6f6",
+          "name": "Multi-aggregated link report (NDJSON)",
+          "request": {
+            "name": "Multi-aggregated link report (NDJSON)",
+            "description": {
+              "content": "Fetch click-level performance report data grouped by up to 4 dimensions with selected sum metrics. Streamed as NDJSON with X-Count / X-Has-Next headers. Limited to 5 requests/min and 100/hour per API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publisher",
+                ":publisher_id",
+                "aggregation",
+                "v1",
+                "link-report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50000"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "dim",
+                  "value": "<string>",
+                  "description": "(Required) Dimension(s) to group by (repeatable, up to 4)."
+                },
+                {
+                  "disabled": false,
+                  "key": "dim",
+                  "value": "<string>",
+                  "description": "(Required) Dimension(s) to group by (repeatable, up to 4)."
+                },
+                {
+                  "disabled": false,
+                  "key": "met",
+                  "value": "<string>",
+                  "description": "(Required) Metric(s) to include (repeatable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "met",
+                  "value": "<string>",
+                  "description": "(Required) Metric(s) to include (repeatable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/x-ndjson"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a2377c77-6783-4e4e-bf12-593ede91a4a8",
+              "name": "NDJSON stream of aggregated rows.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "aggregation",
+                    "v1",
+                    "link-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50000"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dim",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dim",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "met",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "met",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/x-ndjson"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/x-ndjson"
+                }
+              ],
+              "body": "{\"device_type\": \"mobile\", \"publisher_commission_amount_gbp\": 100.00}\n{\"device_type\": \"pc\", \"publisher_commission_amount_gbp\": 34.56}\n",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "75b2990f-6ee1-4471-a9e6-e590cf576369",
+              "name": "Rate limit exceeded. Returns 429 Too Many Requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "aggregation",
+                    "v1",
+                    "link-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50000"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dim",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dim",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "met",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "met",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d3d23318-ec7a-44c8-afbc-d950c23315aa",
+          "name": "List available link-report dimensions",
+          "request": {
+            "name": "List available link-report dimensions",
+            "description": {},
+            "url": {
+              "path": [
+                "publisher",
+                ":publisher_id",
+                "aggregation",
+                "v1",
+                "link-report",
+                "dimensions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "34f71555-f7c6-44b5-9e84-a5bbdf07d9c5",
+              "name": "List of dimensions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "aggregation",
+                    "v1",
+                    "link-report",
+                    "dimensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58102b38-9be6-4925-9edc-42670727b857",
+          "name": "List available link-report metrics",
+          "request": {
+            "name": "List available link-report metrics",
+            "description": {},
+            "url": {
+              "path": [
+                "publisher",
+                ":publisher_id",
+                "aggregation",
+                "v1",
+                "link-report",
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d4f6046a-a94f-47c6-bc67-bb307650b9c6",
+              "name": "List of metrics.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "aggregation",
+                    "v1",
+                    "link-report",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1af4fef5-dfcf-424b-ba97-098885b863c9",
+          "name": "Multi-aggregated page report (NDJSON)",
+          "request": {
+            "name": "Multi-aggregated page report (NDJSON)",
+            "description": {
+              "content": "Fetch page-impression level performance report data grouped by selected dimensions and sum metrics. Streamed as NDJSON with X-Count / X-Has-Next headers. Limited to 5 requests/min and 100/hour per API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publisher",
+                ":publisher_id",
+                "aggregation",
+                "v1",
+                "page-report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50000"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "dim",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "dim",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "met",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "met",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/x-ndjson"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0cf225f1-8af0-4301-90a4-c49e2dcaf0bc",
+              "name": "NDJSON stream of aggregated rows.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "aggregation",
+                    "v1",
+                    "page-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50000"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dim",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dim",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "met",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "met",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/x-ndjson"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/x-ndjson"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6f453a41-e67b-4bf4-9ca2-8b9046391624",
+              "name": "Rate limit exceeded. Returns 429 Too Many Requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "aggregation",
+                    "v1",
+                    "page-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50000"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "dim",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dim",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "met",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "met",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e9b6be5-cd34-41ee-9c27-bee11d52e34a",
+          "name": "List available page-report dimensions",
+          "request": {
+            "name": "List available page-report dimensions",
+            "description": {},
+            "url": {
+              "path": [
+                "publisher",
+                ":publisher_id",
+                "aggregation",
+                "v1",
+                "page-report",
+                "dimensions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b59adbe8-0ca3-4923-9985-a5a710ff98d4",
+              "name": "List of dimensions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "aggregation",
+                    "v1",
+                    "page-report",
+                    "dimensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2f99cdc-9f9c-420d-a8e4-28273d0a6beb",
+          "name": "List available page-report metrics",
+          "request": {
+            "name": "List available page-report metrics",
+            "description": {},
+            "url": {
+              "path": [
+                "publisher",
+                ":publisher_id",
+                "aggregation",
+                "v1",
+                "page-report",
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1cf145c3-50b7-45d0-83e5-728567444dbb",
+              "name": "List of metrics.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "aggregation",
+                    "v1",
+                    "page-report",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f78aff1b-e5cd-47fa-8162-6e4c31b1d81e",
+          "name": "Get deactivated merchants report",
+          "request": {
+            "name": "Get deactivated merchants report",
+            "description": {
+              "content": "Lists merchants that have been deactivated and aggregates clicks and revenue for the publisher over the recent period.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publisher",
+                ":publisher_id",
+                "deactivated-merchants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_dir",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "30",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "min_publisher_combined_commission_amount",
+                  "value": "0.01",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "domain_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "timezone",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a48f198a-c9a4-48c9-998e-bdb4424cec64",
+              "name": "Deactivated merchants with pagination.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "deactivated-merchants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "30"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "min_publisher_combined_commission_amount",
+                      "value": "0.01"
+                    },
+                    {
+                      "key": "domain_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timezone",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"has_next\": false,\n    \"total_count\": 8334,\n    \"offset\": 4431,\n    \"limit\": 1608\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://reporting.skimapis.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "access_token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cdf5a144-e9d8-4734-b6b9-cc791656c1f9",
+    "name": "Skimlinks Merchant Commissions Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher's monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.\n\nAuthentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.\n\nRate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.\n\nContact Support:\n Name: Skimlinks Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

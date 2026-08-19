@@ -16,8 +16,8 @@ info:
   x-method: searched
   x-source: https://developers.skimlinks.com/merchant.html (Apiary blueprint skimlinksmerchantapi)
 servers:
-- url: https://merchants.skimapis.com
-  description: Skimlinks Merchant API production host
+- url: https://reporting.skimapis.com
+  description: Skimlinks Reporting API production host
 security:
 - access_token: []
 tags:

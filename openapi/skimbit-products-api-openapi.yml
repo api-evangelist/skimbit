@@ -16,8 +16,8 @@ info:
   x-method: searched
   x-source: https://developers.skimlinks.com/merchant.html (Apiary blueprint skimlinksmerchantapi)
 servers:
-- url: https://merchants.skimapis.com
-  description: Skimlinks Merchant API production host
+- url: https://products.skimapis.com
+  description: Skimlinks Product Key API production host
 security:
 - access_token: []
 tags:
@@ -249,6 +249,9 @@ paths:
   /publisher/{publisher_id}/trending-products:
     get:
       operationId: getTrendingProducts
+      servers:
+      - url: https://reporting.skimapis.com
+        description: Skimlinks Reporting API production host (this operation is served by the Reporting API, not the Product Key API)
       summary: Get trending products
       description: Insights into products trending across the Skimlinks network that the publisher has not yet featured. Click data updates hourly; sales information available for the past 7 and 30 days.
       tags:
@@ -337,6 +340,9 @@ paths:
   /publisher/{publisher_id}/product-report:
     get:
       operationId: getProductBoughtReport
+      servers:
+      - url: https://reporting.skimapis.com
+        description: Skimlinks Reporting API production host (this operation is served by the Reporting API, not the Product Key API)
       summary: Get products bought report
       description: Insights about the products readers purchased after clicking through commerce content, including SKU, quantity, order value and revenue. Features data from Awin, CJ, Rakuten, Impact, Partnerize and Pepperjam networks only.
       tags:

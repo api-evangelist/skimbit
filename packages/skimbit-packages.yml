@@ -1,0 +1,79 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://registry.npmjs.org/-/v1/search?text=skimlinks,
+  https://pypi.org/pypi/skimlinks/json,
+  https://rubygems.org/api/v1/search.json?query=skimlinks,
+  https://api.github.com/orgs/skimlinks,
+  https://developers.skimlinks.com/skimlinks-script.html
+description: >-
+  Client-library survey for Skimlinks (SkimBit Ltd). Skimlinks publishes NO
+  first-party SDK on any public package registry. npm, PyPI, RubyGems and the
+  GitHub org namespace were all queried unauthenticated on the generated date:
+  npm returns one package under a Skimlinks employee scope that is a fork of a
+  third-party browser-extension library (not a Skimlinks API client), PyPI has
+  no `skimlinks` project, the only RubyGems match is a community wrapper last
+  released in 2013, and https://github.com/skimlinks does not exist (404 from
+  the GitHub orgs API). The only first-party distributed artifact is the
+  Skimlinks on-page JavaScript, which is delivered from a CDN with no version
+  in the URL and no registry metadata endpoint.
+official_sdk_count: 0
+packages:
+- name: Skimlinks JavaScript
+  language: javascript
+  registry: cdn
+  official: true
+  url: https://s.skimresources.com/js/skimlinks.js
+  publisher_url: https://s.skimresources.com/js/{publisher_id}.skimlinks.js
+  docs: https://developers.skimlinks.com/skimlinks-script.html
+  version: null
+  published: null
+  note: >-
+    Checked, nothing to record. The loader URL carries no version segment and
+    the served bundle (HTTP 200, application/javascript, 5,407 bytes on
+    2026-08-13) is packed/minified with no version string, so a consumer cannot
+    tell which build they are executing either. There is no jsDelivr/unpkg
+    mirror and no registry metadata endpoint to query. This is the on-page
+    monetization script, not an API client library — it is NOT counted toward
+    official_sdk_count.
+- name: skimlinks
+  language: ruby
+  registry: rubygems
+  official: false
+  url: https://rubygems.org/gems/skimlinks
+  source: https://github.com/krautcomputing/skimlinks
+  version: 1.0.1
+  published: '2013-07-01'
+  downloads: 11571
+  note: >-
+    Community wrapper by Manuel Meurer (krautcomputing), MIT licensed. Read from
+    https://rubygems.org/api/v1/versions/skimlinks.json. NOT first-party: it is
+    not referenced from developers.skimlinks.com and its last release (2013)
+    predates the v4 Merchant API, the aggregation/v1 Reporting endpoints and the
+    Product Key API entirely, so it cannot cover the current contract.
+- name: '@eduardoac-skimlinks/webext-redux'
+  language: javascript
+  registry: npm
+  official: false
+  url: https://www.npmjs.com/package/@eduardoac-skimlinks/webext-redux
+  version: 3.0.1-release-candidate
+  published: '2022-08-08'
+  note: >-
+    Read from the npm registry search endpoint. Published under a
+    @skimlinks.com employee account but it is a fork of tshaddix/webext-redux, a
+    generic Redux-for-web-extensions utility. It is NOT a Skimlinks API client
+    and is recorded here only so a future run does not mistake it for one.
+registries_checked:
+- { registry: npm, query: skimlinks, first_party_hits: 0 }
+- { registry: pypi, package: skimlinks, status: 404 }
+- { registry: rubygems, query: skimlinks, first_party_hits: 0 }
+- { registry: github-org, org: skimlinks, status: 404 }
+gaps:
+- >-
+  No first-party client library exists in any language for the Merchant,
+  Reporting or Product Key APIs. Every integrator writes the timestamp-based
+  access_token exchange and the offset pagination loop from scratch.
+- >-
+  The on-page Skimlinks JavaScript is distributed unpinned. There is no
+  integrity hash, no versioned URL and no changelog, so publishers cannot pin,
+  diff or roll back the script running on their pages.

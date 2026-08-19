@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Skimlinks Merchant Commissions Offers API",
+    "version": "v4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "access_token",
+      "value": "{{access_token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Offers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List / search offers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://merchants.skimapis.com/v4/publisher/:publisher_id/offers",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "a_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "vertical",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "favourite_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_dir",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns merchant offers (coupons, deals, promotions) available to the authenticated publisher."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

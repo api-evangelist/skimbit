@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Skimlinks Merchant Commissions Verticals API",
+    "version": "v4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "access_token",
+      "value": "{{access_token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verticals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List verticals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://merchants.skimapis.com/v4/verticals"
+          },
+          "docs": "Returns a list of verticals and vertical groups. No authentication required."
+        },
+        {
+          "info": {
+            "name": "List alternative verticals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://merchants.skimapis.com/v4/alternative_verticals"
+          },
+          "docs": "Returns a list of alternative vertical hierarchies (multiple taxonomies of unlimited depth). No authentication required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

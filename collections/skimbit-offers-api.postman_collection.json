@@ -1,0 +1,349 @@
+{
+  "item": [
+    {
+      "id": "1202da12-8fd7-4a77-84ea-e72070f0db87",
+      "name": "Offers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cfbd854a-81b8-4818-9dc3-87063ce5586d",
+          "name": "List / search offers",
+          "request": {
+            "name": "List / search offers",
+            "description": {
+              "content": "Returns merchant offers (coupons, deals, promotions) available to the authenticated publisher.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "publisher",
+                ":publisher_id",
+                "offers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "merchant_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "a_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "vertical",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "favourite_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_dir",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e94f5a8b-8ed0-41af-a66a-86676277d933",
+              "name": "A list of offers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "publisher",
+                    ":publisher_id",
+                    "offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "merchant_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "a_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "vertical",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "favourite_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"has_more\": false,\n  \"offers\": [\n    {\n      \"id\": 6440,\n      \"offer_type\": \"seasonal\",\n      \"offer_starts\": \"1958-04-05T21:24:50.847Z\",\n      \"offer_ends\": \"1962-02-17T12:13:20.284Z\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"coupon_code\": \"string\",\n      \"url\": \"string\",\n      \"terms\": \"string\",\n      \"merchant_details\": {\n        \"advertiser_id\": 2560,\n        \"merchant_ids\": [\n          \"string\",\n          \"string\"\n        ],\n        \"name\": \"string\",\n        \"domains\": [\n          \"string\",\n          \"string\"\n        ],\n        \"partner_type\": \"preferred\",\n        \"verticals\": [\n          \"string\",\n          \"string\"\n        ],\n        \"countries\": [\n          \"string\",\n          \"string\"\n        ],\n        \"favourite\": false,\n        \"calculated_conversion_rate\": 1364.1454031748112,\n        \"estimated_payment_days\": \"string\",\n        \"estimated_attribution_window\": \"string\",\n        \"calculated_ecpc\": 9490.67232578838,\n        \"calculated_average_order_value\": 5755.995421066378,\n        \"calculated_commission_rate\": 1042.1043760261905,\n        \"minimum_rate\": {\n          \"aggregation_type\": \"minimum\",\n          \"rate_type\": \"flat_rate\",\n          \"base_rate\": 8251.994640271574,\n          \"increased_rate\": 3467.343505943653,\n          \"currency\": \"string\",\n          \"payout_type\": \"cpa\",\n          \"description\": \"string\",\n          \"start_date\": \"1995-12-23T07:25:52.418Z\"\n        },\n        \"maximum_rate\": {\n          \"aggregation_type\": \"maximum\",\n          \"rate_type\": \"flat_rate\",\n          \"base_rate\": 3500.5885486948287,\n          \"increased_rate\": 7538.763248128236,\n          \"currency\": \"string\",\n          \"payout_type\": \"cpa\",\n          \"description\": \"string\",\n          \"start_date\": \"2007-01-07T14:29:33.095Z\"\n        },\n        \"metadata\": {\n          \"logo\": \"string\",\n          \"description\": \"string\",\n          \"special_conditions\": \"string\"\n        }\n      }\n    },\n    {\n      \"id\": 3510,\n      \"offer_type\": \"coupon\",\n      \"offer_starts\": \"1978-10-05T00:42:44.322Z\",\n      \"offer_ends\": \"2016-08-05T17:25:43.756Z\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"coupon_code\": \"string\",\n      \"url\": \"string\",\n      \"terms\": \"string\",\n      \"merchant_details\": {\n        \"advertiser_id\": 6964,\n        \"merchant_ids\": [\n          \"string\",\n          \"string\"\n        ],\n        \"name\": \"string\",\n        \"domains\": [\n          \"string\",\n          \"string\"\n        ],\n        \"partner_type\": \"vip\",\n        \"verticals\": [\n          \"string\",\n          \"string\"\n        ],\n        \"countries\": [\n          \"string\",\n          \"string\"\n        ],\n        \"favourite\": true,\n        \"calculated_conversion_rate\": 4603.259324183839,\n        \"estimated_payment_days\": \"string\",\n        \"estimated_attribution_window\": \"string\",\n        \"calculated_ecpc\": 7918.702357951378,\n        \"calculated_average_order_value\": 7284.778359737721,\n        \"calculated_commission_rate\": 4233.793894238415,\n        \"minimum_rate\": {\n          \"aggregation_type\": \"maximum\",\n          \"rate_type\": \"percentage\",\n          \"base_rate\": 1870.9737368141955,\n          \"increased_rate\": 758.496887184792,\n          \"currency\": \"string\",\n          \"payout_type\": \"cpa\",\n          \"description\": \"string\",\n          \"start_date\": \"2009-01-10T11:12:25.263Z\"\n        },\n        \"maximum_rate\": {\n          \"aggregation_type\": \"maximum\",\n          \"rate_type\": \"percentage\",\n          \"base_rate\": 8922.797971510608,\n          \"increased_rate\": 2560.385309010694,\n          \"currency\": \"string\",\n          \"payout_type\": \"cpc\",\n          \"description\": \"string\",\n          \"start_date\": \"1977-04-21T23:10:15.413Z\"\n        },\n        \"metadata\": {\n          \"logo\": \"string\",\n          \"description\": \"string\",\n          \"special_conditions\": \"string\"\n        }\n      }\n    }\n  ],\n  \"last_val\": 2137,\n  \"next_val\": 8170,\n  \"num_returned\": 1643\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff6c2722-0328-4cdd-a283-a8a03047b7d2",
+              "name": "Rate limit exceeded (40 requests/min, 1000/hour per API key).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "publisher",
+                    ":publisher_id",
+                    "offers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "merchant_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "a_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "vertical",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "country",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "favourite_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://merchants.skimapis.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "access_token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3093b979-3524-4279-a87d-bc3d0938b42a",
+    "name": "Skimlinks Merchant Commissions Offers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher's monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.\n\nAuthentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.\n\nRate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.\n\nContact Support:\n Name: Skimlinks Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

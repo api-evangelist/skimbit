@@ -1,0 +1,359 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Skimlinks Merchant Commissions Products API",
+    "version": "v4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "access_token",
+      "value": "{{access_token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get product details and alternatives",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://products.skimapis.com/publisher/:publisher_id/product",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "publisher_domain_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "product_url",
+                "value": "",
+                "type": "query",
+                "description": "The product URL to query."
+              },
+              {
+                "name": "product_keywords",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "upc",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "product_id_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "merchant_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "domains",
+                "value": "",
+                "type": "query",
+                "description": "Pipe-separated domains to filter alternatives."
+              },
+              {
+                "name": "exclude_domains",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "referrer_url",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "per_merchant_limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "alternatives_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "country_code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "alternative_country_code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_desc",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Query for a specific product (by product_url, upc, or product_id) and get information plus alternative merchants offering the same product. Default rate limit 80/min and 5000/hour."
+        },
+        {
+          "info": {
+            "name": "Get multiple product details and alternatives",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://products.skimapis.com/v1/publisher/:publisher_id/products",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "publisher_domain_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "merchant_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "domains",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "exclude_domains",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "referrer_url",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "per_merchant_limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "alternatives_size",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "country_code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "alternative_country_code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_desc",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "product_id_type",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Query multiple product URLs (or product ids) at once and get information and alternatives for each. Default rate limit 20/min and 1000/hour."
+        },
+        {
+          "info": {
+            "name": "Get trending products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://products.skimapis.com/publisher/:publisher_id/trending-products",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_dir",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "a_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "country_code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "audience_country_code",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "vertical_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "product_search",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Insights into products trending across the Skimlinks network that the publisher has not yet featured. Click data updates hourly; sales information available for the past 7 and 30 days."
+        },
+        {
+          "info": {
+            "name": "Get products bought report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://products.skimapis.com/publisher/:publisher_id/product-report",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_dir",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "product_search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Insights about the products readers purchased after clicking through commerce content, including SKU, quantity, order value and revenue. Features data from Awin, CJ, Rakuten, Impact, Partnerize and Pepperjam networks only."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

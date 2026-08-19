@@ -1,17 +1,15 @@
 generated: '2026-07-21'
 method: derived
 status: candidate
-source: >-
-  Derived from the Skimlinks OpenAPI operations. No official hosted/remote
-  Skimlinks MCP server was found in the docs, the npm @modelcontextprotocol
-  scope, or public MCP registries as of the generated date.
+source: Derived from the Skimlinks OpenAPI operations. No official hosted/remote Skimlinks MCP server
+  was found in the docs, the npm @modelcontextprotocol scope, or public MCP registries as of the generated
+  date.
 server:
   name: skimlinks
   transport: http
-  description: >-
-    Candidate MCP tool surface mapping the read operations of the Skimlinks
-    Merchant, Reporting and Product Key APIs. Each tool wraps one operationId;
-    all require a Skimlinks access_token minted from client credentials.
+  description: Candidate MCP tool surface mapping the read operations of the Skimlinks Merchant, Reporting
+    and Product Key APIs. Each tool wraps one operationId; all require a Skimlinks access_token minted
+    from client credentials.
 tools:
 - name: list_merchants
   description: List / search Skimlinks merchant programs available to a publisher.
@@ -58,3 +56,9 @@ tools:
 - name: get_multi_products
   description: Get product details and alternatives for multiple products.
   source_operation: openapi/skimbit-product-key-openapi.yml#getMultiProducts
+deployment:
+  mode: none
+  verified: derived
+  tools: 15
+  checked: '2026-08-12'
+  source: catalog MCP census

@@ -1,0 +1,386 @@
+{
+  "item": [
+    {
+      "id": "f4861e51-bfd8-4435-8f63-e5068b9c79f4",
+      "name": "Commissions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "32889aac-88ce-44aa-a11b-16d0bb0d9063",
+          "name": "Search commissions",
+          "request": {
+            "name": "Search commissions",
+            "description": {
+              "content": "Query Skimlinks' raw commission data between two dates, or list all commissions changed since a point in time via `updated_since`. Limited to 40 requests/min and 300/hour per API key (80/min, 500/hour, 1000/day per IP).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publisher",
+                ":publisher_id",
+                "commission-report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "access_token",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "30"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_since",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "custom_id",
+                  "value": "<string>",
+                  "description": "Filter by xcust custom click id."
+                },
+                {
+                  "disabled": false,
+                  "key": "merchant_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "a_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "domain_id",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_dir",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "commission_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "commission_type",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "publisher_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "229074ae-2a73-4b77-a0b7-39119f374f2c",
+              "name": "Commission records with pagination.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "commission-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "30"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "custom_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "merchant_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "a_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "domain_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "commission_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "commission_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pagination\": {\n    \"has_next\": true,\n    \"total_count\": 236,\n    \"offset\": 0,\n    \"limit\": 10\n  },\n  \"commissions\": [\n    {\n      \"commission_id\": 123,\n      \"transaction_details\": {\n        \"basket\": {\n          \"items\": 1,\n          \"publisher_amount\": 0.35,\n          \"order_amount\": 8.69,\n          \"currency\": \"GBP\",\n          \"commission_type\": \"CPC\"\n        },\n        \"status\": \"active\",\n        \"payment_status\": \"paid\",\n        \"transaction_date\": \"2017-03-01 15:15:00\"\n      },\n      \"merchant_details\": {\n        \"merchant_name\": \"Maplin Electronics Ltd\",\n        \"merchant_id\": 8212,\n        \"advertiser_id\": 124\n      },\n      \"publisher_id\": 1,\n      \"publisher_domain_id\": 2\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a9485fd-76af-4b6d-8941-482fa55daddd",
+              "name": "Rate limit exceeded. Returns 429 Too Many Requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publisher",
+                    ":publisher_id",
+                    "commission-report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "30"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_since",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "custom_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "merchant_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "a_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "domain_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "commission_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "commission_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "publisher_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://reporting.skimapis.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "access_token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3ae5192a-cd98-4ce8-9485-a95208c86006",
+    "name": "Skimlinks Merchant Commissions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher's monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.\n\nAuthentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.\n\nRate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.\n\nContact Support:\n Name: Skimlinks Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

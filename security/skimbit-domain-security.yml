@@ -1,4 +1,4 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -11,9 +11,9 @@ hosts:
 - host: developers.skimlinks.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Sep  2 10:05:29 2026 GMT
+  cert_expires: Oct 25 11:32:06 2026 GMT
   hsts: false
-- host: merchants.skimapis.com
+- host: reporting.skimapis.com
   https: true
   tls_version: TLSv1.3
   cert_expires: Oct  6 20:53:38 2026 GMT

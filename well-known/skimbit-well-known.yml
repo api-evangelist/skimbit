@@ -1,21 +1,99 @@
-generated: '2026-07-21'
-method: searched
+generated: '2026-08-13'
+method: probed
 description: >-
-  Probe of the /.well-known/ discovery surface across the Skimlinks website and
-  API hosts. No discovery documents were served (all probes returned 404/405 or
-  did not resolve), so no WellKnown/SecurityTxt pointer is wired. Absence is
-  recorded as valid data.
+  Probe of the /.well-known/ discovery surface across every Skimlinks website,
+  docs and API host. NO discovery document is served anywhere: the four
+  *.skimapis.com API hosts answer every path with a uniform 405 JSON error, the
+  developer portal and the marketing site answer 404, and hub.skimlinks.com is a
+  single-page-app catch-all that returns HTTP 200 with the same 9,290-byte HTML
+  login shell for every path including /.well-known/agent-card.json — the
+  classic soft-200 false positive, treated here as a MISS. Because no path
+  returned a real document, NO WellKnown and NO SecurityTxt pointer is wired
+  into apis.yml. Absence is recorded as valid data.
+result: no-documents-served
+pointer_emitted: false
 hosts:
-- host: https://www.skimlinks.com
+- host: https://merchants.skimapis.com
+  note: All paths return 405 {"description":"The method is not allowed for the requested URL."}
   documents:
-  - { path: /.well-known/security.txt, status: 404 }
-- host: https://api.skimlinks.com
+  - { path: /.well-known/security.txt, status: 405 }
+  - { path: /.well-known/openid-configuration, status: 405 }
+  - { path: /.well-known/oauth-authorization-server, status: 405 }
+  - { path: /.well-known/api-catalog, status: 405 }
+  - { path: /.well-known/ai-plugin.json, status: 405 }
+  - { path: /.well-known/agent-card.json, status: 405 }
+  - { path: /.well-known/agent.json, status: 405 }
+- host: https://reporting.skimapis.com
+  note: All paths return 405 (same Flask-style JSON error body).
   documents:
-  - { path: /.well-known/security.txt, status: 410 }
+  - { path: /.well-known/security.txt, status: 405 }
+  - { path: /.well-known/openid-configuration, status: 405 }
+  - { path: /.well-known/oauth-authorization-server, status: 405 }
+  - { path: /.well-known/api-catalog, status: 405 }
+  - { path: /.well-known/ai-plugin.json, status: 405 }
+  - { path: /.well-known/agent-card.json, status: 405 }
+  - { path: /.well-known/agent.json, status: 405 }
+- host: https://products.skimapis.com
+  note: All paths return 405 (same Flask-style JSON error body).
+  documents:
+  - { path: /.well-known/security.txt, status: 405 }
+  - { path: /.well-known/openid-configuration, status: 405 }
+  - { path: /.well-known/oauth-authorization-server, status: 405 }
+  - { path: /.well-known/api-catalog, status: 405 }
+  - { path: /.well-known/ai-plugin.json, status: 405 }
+  - { path: /.well-known/agent-card.json, status: 405 }
+  - { path: /.well-known/agent.json, status: 405 }
 - host: https://authentication.skimapis.com
+  note: >-
+    The token endpoint host. Returns 405 for every GET, including the two OAuth
+    metadata paths — the client_credentials-style token exchange publishes no
+    RFC 8414 / OIDC discovery document.
   documents:
   - { path: /.well-known/openid-configuration, status: 405 }
   - { path: /.well-known/oauth-authorization-server, status: 405 }
-- host: https://skimapis.com
+  - { path: /.well-known/security.txt, status: 405 }
+  - { path: /.well-known/api-catalog, status: 405 }
+  - { path: /.well-known/agent-card.json, status: 405 }
+  - { path: /.well-known/agent.json, status: 405 }
+- host: https://developers.skimlinks.com
+  note: nginx 404 (153-byte HTML error page) for every path.
   documents:
-  - { path: /.well-known/security.txt, status: 0, note: apex host does not resolve (subdomains only) }
+  - { path: /.well-known/security.txt, status: 404 }
+  - { path: /.well-known/api-catalog, status: 404 }
+  - { path: /.well-known/ai-plugin.json, status: 404 }
+  - { path: /.well-known/agent-card.json, status: 404 }
+  - { path: /.well-known/agent.json, status: 404 }
+  - { path: /llms.txt, status: 404 }
+- host: https://www.skimlinks.com
+  note: WordPress 404 template (608KB HTML) for every path.
+  documents:
+  - { path: /.well-known/security.txt, status: 404 }
+  - { path: /.well-known/openid-configuration, status: 404 }
+  - { path: /.well-known/oauth-authorization-server, status: 404 }
+  - { path: /.well-known/api-catalog, status: 404 }
+  - { path: /.well-known/ai-plugin.json, status: 404 }
+  - { path: /.well-known/agent-card.json, status: 404 }
+  - { path: /.well-known/agent.json, status: 404 }
+  - { path: /llms.txt, status: 404 }
+- host: https://hub.skimlinks.com
+  note: >-
+    SOFT-200 CATCH-ALL. Every path returns HTTP 200 text/html with the identical
+    9,290-byte Publisher Hub login shell, including /openapi.json, /swagger.json
+    and /.well-known/agent-card.json. None is a document; all are recorded as
+    misses and none earns a pointer.
+  documents:
+  - { path: /.well-known/security.txt, status: 200, document: false, body: html-spa-shell }
+  - { path: /.well-known/openid-configuration, status: 200, document: false, body: html-spa-shell }
+  - { path: /.well-known/oauth-authorization-server, status: 200, document: false, body: html-spa-shell }
+  - { path: /.well-known/api-catalog, status: 200, document: false, body: html-spa-shell }
+  - { path: /.well-known/ai-plugin.json, status: 200, document: false, body: html-spa-shell }
+  - { path: /.well-known/agent-card.json, status: 200, document: false, body: html-spa-shell }
+  - { path: /.well-known/agent.json, status: 200, document: false, body: html-spa-shell }
+  - { path: /llms.txt, status: 200, document: false, body: html-spa-shell }
+history:
+- generated: '2026-07-21'
+  note: >-
+    First probe recorded 404/410/405 on a narrower path+host set and reached the
+    same conclusion. This round widened it to all four API hosts, the docs host
+    and the Publisher Hub, and added the agent-card, api-catalog, ai-plugin and
+    llms.txt paths.

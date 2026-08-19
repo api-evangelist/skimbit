@@ -1,0 +1,203 @@
+{
+  "item": [
+    {
+      "id": "a2b51540-0ca1-4519-bb95-cddc2c65ad3c",
+      "name": "Verticals",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "46325b5d-6370-452c-8576-5b6d3d59cac4",
+          "name": "List verticals",
+          "request": {
+            "name": "List verticals",
+            "description": {
+              "content": "Returns a list of verticals and vertical groups. No authentication required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "verticals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "32cce5f7-22c8-47f9-806a-e3dd3c8e2554",
+              "name": "A list of vertical groups.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "verticals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vertical_groups\": [\n    {\n      \"name\": \"string\",\n      \"verticals\": [\n        {\n          \"id\": 6400,\n          \"name\": \"string\",\n          \"group_name\": \"string\",\n          \"group_id\": 8111\n        },\n        {\n          \"id\": 7754,\n          \"name\": \"string\",\n          \"group_name\": \"string\",\n          \"group_id\": 3596\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"verticals\": [\n        {\n          \"id\": 3640,\n          \"name\": \"string\",\n          \"group_name\": \"string\",\n          \"group_id\": 7751\n        },\n        {\n          \"id\": 287,\n          \"name\": \"string\",\n          \"group_name\": \"string\",\n          \"group_id\": 3175\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d2022790-12c4-47c8-a2a5-f443214b17b3",
+          "name": "List alternative verticals",
+          "request": {
+            "name": "List alternative verticals",
+            "description": {
+              "content": "Returns a list of alternative vertical hierarchies (multiple taxonomies of unlimited depth). No authentication required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "alternative_verticals"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "435b9b66-a887-43dc-8c81-9932489e21ef",
+              "name": "A list of alternative vertical taxonomies.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "alternative_verticals"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "access_token",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"taxonomy\": \"string\",\n    \"id\": 3619,\n    \"name\": \"string\"\n  },\n  {\n    \"taxonomy\": \"string\",\n    \"id\": 2943,\n    \"name\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://merchants.skimapis.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "access_token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5e415aa2-8428-4188-bdc0-57a015519ba6",
+    "name": "Skimlinks Merchant Commissions Verticals API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher's monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.\n\nAuthentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.\n\nRate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.\n\nContact Support:\n Name: Skimlinks Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

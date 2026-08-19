@@ -1,0 +1,171 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  mcp/skimbit-mcp.yml, openapi/skimbit-*-openapi.yml,
+  asyncapi/skimbit-data-pipe-asyncapi.yml
+description: >-
+  Binding between the candidate Skimlinks MCP tool surface and the REST
+  operations that back it. IMPORTANT CAVEAT ON PROVENANCE: Skimlinks ships NO
+  MCP server — neither hosted nor stdio — so the tool column is our own derived
+  candidate set (mcp/skimbit-mcp.yml, deployment.mode: none), not a published
+  manifest. Confidence is therefore high on the binding (each candidate tool was
+  authored FROM an operationId, so the mapping is exact and each tool inherits
+  that operation's real parameters as its inputSchema) but the surface itself is
+  proposed, not shipped. There is no GraphQL surface.
+surfaces:
+  openapi:
+    files:
+    - openapi/skimbit-merchants-api-openapi.yml
+    - openapi/skimbit-domains-api-openapi.yml
+    - openapi/skimbit-verticals-api-openapi.yml
+    - openapi/skimbit-offers-api-openapi.yml
+    - openapi/skimbit-commissions-api-openapi.yml
+    - openapi/skimbit-reports-api-openapi.yml
+    - openapi/skimbit-payments-api-openapi.yml
+    - openapi/skimbit-products-api-openapi.yml
+    gated: false
+    note: >-
+      Specs are public (harvested from the provider's Apiary blueprints);
+      calling them requires a publisher access_token, so every tool is
+      account-gated at runtime.
+  graphql:
+    endpoint: null
+    note: Skimlinks publishes no GraphQL surface.
+  mcp:
+    url: null
+    gated: null
+    note: >-
+      No MCP server exists. Probed npm (registry search), the docs and the
+      public MCP registries on 2026-08-13 with no first-party hit.
+  data_pipe:
+    spec: asyncapi/skimbit-data-pipe-asyncapi.yml
+    gated: true
+    note: >-
+      Event-level data is delivered only as daily batch files to a
+      contract-provisioned bucket. It is not reachable by an agent at call time
+      and has no REST or MCP equivalent, which is why it appears in
+      surface_only[] rather than in crosswalk[].
+crosswalk:
+- tool: list_merchants
+  category: catalog
+  rest: [listMerchants]
+  binding: one-to-one
+  confidence: high
+  note: GET /v4/publisher/{publisher_id}/merchants. Results vary by publisher_domain_id.
+- tool: list_domains
+  category: catalog
+  rest: [listDomains]
+  binding: one-to-one
+  confidence: high
+- tool: list_verticals
+  category: taxonomy
+  rest: [listVerticals]
+  binding: one-to-one
+  confidence: high
+- tool: list_alternative_verticals
+  category: taxonomy
+  rest: [listAlternativeVerticals]
+  binding: one-to-one
+  confidence: high
+- tool: list_offers
+  category: catalog
+  rest: [listOffers]
+  binding: one-to-one
+  confidence: high
+- tool: search_commissions
+  category: reporting
+  rest: [searchCommissions]
+  binding: one-to-one
+  confidence: high
+  note: >-
+    Raw commission rows. Tightest rate limit family on the platform (40/min,
+    300/hr per key, plus per-IP ceilings) — an agent must page deliberately.
+- tool: get_aggregated_reports
+  category: reporting
+  rest: [getAggregatedReports]
+  binding: one-to-one
+  confidence: high
+- tool: get_link_report
+  category: reporting
+  rest: [getLinkReport]
+  binding: one-to-one
+  confidence: high
+  note: >-
+    Streams application/x-ndjson with X-Count / X-Has-Next headers, not a JSON
+    body. An MCP tool wrapping it must consume NDJSON and follow X-Has-Next. The
+    dimension and metric enumeration operations are NOT wrapped by any candidate
+    tool — see rest_only[].
+- tool: get_page_report
+  category: reporting
+  rest: [getPageReport]
+  binding: one-to-one
+  confidence: high
+  note: Same NDJSON streaming contract as get_link_report.
+- tool: get_trending_products
+  category: products
+  rest: [getTrendingProducts]
+  binding: one-to-one
+  confidence: high
+- tool: get_product_bought_report
+  category: products
+  rest: [getProductBoughtReport]
+  binding: one-to-one
+  confidence: high
+- tool: get_payment_status
+  category: payments
+  rest: [getPaymentStatus]
+  binding: one-to-one
+  confidence: high
+- tool: get_deactivated_merchants
+  category: reporting
+  rest: [getDeactivatedMerchants]
+  binding: one-to-one
+  confidence: high
+- tool: get_product
+  category: products
+  rest: [getProduct]
+  binding: one-to-one
+  confidence: high
+  note: >-
+    Product Key API. Requires a SEPARATE client_id / client_secret pair issued
+    on request — a tool bound to it cannot reuse the Merchant/Reporting token.
+- tool: get_multi_products
+  category: products
+  rest: [getMultiProducts]
+  binding: one-to-one
+  confidence: high
+  note: >-
+    POST used for batch retrieval, not mutation. The only non-GET operation in
+    the whole surface and it is still read-only, which is why the repo records
+    no idempotency-key requirement.
+mcp_only: []
+rest_only:
+- operation: getLinkReportDimensions
+  reason: >-
+    Enumerates the dimensions accepted by getLinkReport. Not wrapped as its own
+    candidate tool; an agent should call it to discover valid dimension values
+    before building a link-report query.
+- operation: getLinkReportMetrics
+  reason: Enumerates the metrics accepted by getLinkReport. Same discovery role.
+- operation: getPageReportDimensions
+  reason: Enumerates the dimensions accepted by getPageReport.
+- operation: getPageReportMetrics
+  reason: Enumerates the metrics accepted by getPageReport.
+surface_only:
+- surface: data-pipe
+  datasets: [clicks, pages, commissions, products]
+  reason: >-
+    Event-level clicks, page impressions, commissions and product purchases are
+    available ONLY through the batch Data Pipe export. Skimlinks states this
+    explicitly. There is no REST operation and no candidate MCP tool that
+    returns event-level rows, so an agent restricted to the API surface can see
+    aggregates and raw commissions but never impressions or per-click detail.
+coverage:
+  rest_operations_total: 19
+  rest_operations_bound: 15
+  rest_only_unbound: 4
+  mcp_tools_total: 15
+  mcp_tools_bound: 15
+  mcp_only: 0
+  graphql_fields: 0
+  event_datasets_unbound: 4

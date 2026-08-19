@@ -1,0 +1,403 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Skimlinks Merchant Commissions Reports API",
+    "version": "v4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "access_token",
+      "value": "{{access_token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get aggregated performance reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://reporting.skimapis.com/publisher/:publisher_id/reports",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "report_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_dir",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "time_period",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query",
+                "description": "ISO 4217 currency code."
+              },
+              {
+                "name": "a_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "link_search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "merchant_search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "user_ip_countries",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "payment_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Query the Hub Performance report data aggregated by page, date, device, country, domain, link, merchant or network_payout_type. Limited to 40 requests/min and 500/hour per API key."
+        },
+        {
+          "info": {
+            "name": "Multi-aggregated link report (NDJSON)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://reporting.skimapis.com/publisher/:publisher_id/aggregation/v1/link-report",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "dim",
+                "value": "",
+                "type": "query",
+                "description": "Dimension(s) to group by (repeatable, up to 4)."
+              },
+              {
+                "name": "met",
+                "value": "",
+                "type": "query",
+                "description": "Metric(s) to include (repeatable)."
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Fetch click-level performance report data grouped by up to 4 dimensions with selected sum metrics. Streamed as NDJSON with X-Count / X-Has-Next headers. Limited to 5 requests/min and 100/hour per API key."
+        },
+        {
+          "info": {
+            "name": "List available link-report dimensions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://reporting.skimapis.com/publisher/:publisher_id/aggregation/v1/link-report/dimensions",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List available link-report dimensions"
+        },
+        {
+          "info": {
+            "name": "List available link-report metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://reporting.skimapis.com/publisher/:publisher_id/aggregation/v1/link-report/metrics",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List available link-report metrics"
+        },
+        {
+          "info": {
+            "name": "Multi-aggregated page report (NDJSON)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://reporting.skimapis.com/publisher/:publisher_id/aggregation/v1/page-report",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "dim",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "met",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Fetch page-impression level performance report data grouped by selected dimensions and sum metrics. Streamed as NDJSON with X-Count / X-Has-Next headers. Limited to 5 requests/min and 100/hour per API key."
+        },
+        {
+          "info": {
+            "name": "List available page-report dimensions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://reporting.skimapis.com/publisher/:publisher_id/aggregation/v1/page-report/dimensions",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List available page-report dimensions"
+        },
+        {
+          "info": {
+            "name": "List available page-report metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://reporting.skimapis.com/publisher/:publisher_id/aggregation/v1/page-report/metrics",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List available page-report metrics"
+        },
+        {
+          "info": {
+            "name": "Get deactivated merchants report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://reporting.skimapis.com/publisher/:publisher_id/deactivated-merchants",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_dir",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "min_publisher_combined_commission_amount",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "timezone",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists merchants that have been deactivated and aggregates clicks and revenue for the publisher over the recent period."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

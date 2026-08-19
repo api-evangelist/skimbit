@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Skimlinks Merchant Commissions Payments API",
+    "version": "v4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "access_token",
+      "value": "{{access_token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get payment status report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://reporting.skimapis.com/publisher/:publisher_id/payment-status",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_dir",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "invoice_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "payment_status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "payment_type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "saas_fee",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Information about the publisher's invoices and their commissions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

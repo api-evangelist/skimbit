@@ -1,0 +1,395 @@
+asyncapi: 3.0.0
+info:
+  title: Skimlinks Data Pipe
+  version: '0'
+  description: >-
+    The Skimlinks Data Pipe is the event-level data surface behind the
+    Skimlinks affiliate platform: impressions, clicks, commissions and products
+    purchased, cleaned and exported daily to a customer-owned (or
+    Skimlinks-owned) Google Cloud Storage or Amazon S3 bucket. Skimlinks states
+    that event-level data on individual commissions, clicks, page impressions
+    and product purchases "can be accessed only via Data Pipe" — the Reporting
+    API returns aggregates, so this is not a duplicate projection of the REST
+    surface.
+
+
+    TRANSPORT NOTE — read this before treating the document as a broker
+    contract. Skimlinks does NOT publish an AsyncAPI document and does NOT ship
+    webhooks. Delivery is a daily batch write of Avro or CSV files into a
+    partitioned object-storage prefix; there is no broker, no subscription
+    protocol, and no push callback. This AsyncAPI models that documented feed so
+    the event schemas are machine-readable — every channel, message and property
+    below is transcribed from the provider's own published column reference.
+    Nothing here is inferred.
+  contact:
+    name: Skimlinks Developer Documentation
+    url: https://developers.skimlinks.com/data-pipe.html
+  x-generated: '2026-08-13'
+  x-method: generated
+  x-source: >-
+    https://developers.skimlinks.com/data-pipe.html (Apiary blueprint
+    "datapipe1", fetched verbatim from
+    https://jsapi.apiary.io/apis/datapipe1.apib on 2026-08-13, HTTP 200)
+  x-provider-publishes-asyncapi: false
+  x-delivery-model: daily batch export to object storage (Avro or CSV)
+
+defaultContentType: application/octet-stream
+
+servers:
+  gcs:
+    host: storage.googleapis.com
+    protocol: gcs
+    title: Google Cloud Storage (preferred)
+    description: >-
+      Skimlinks' preferred destination. The bucket may be owned by the customer
+      or created and owned by Skimlinks; when Skimlinks owns it, download costs
+      are charged to the customer and files are retained for 30 days after the
+      initial upload.
+  s3:
+    host: s3.amazonaws.com
+    protocol: s3
+    title: Amazon S3
+    description: Alternative customer-owned destination bucket.
+
+channels:
+  clicks:
+    address: '{bucket}/clicks/date={date}/version=0/'
+    title: Clicks
+    description: >-
+      Immutable click events, partitioned by the UTC event date. Each partition
+      contains multiple files; all files in a partition must be read. Reload a
+      partition with replace semantics to avoid duplicates.
+    servers:
+      - $ref: '#/servers/gcs'
+      - $ref: '#/servers/s3'
+    parameters:
+      bucket:
+        description: The destination bucket name agreed with Skimlinks.
+      date:
+        description: UTC event date partition key, YYYY-MM-DD.
+    messages:
+      click:
+        $ref: '#/components/messages/Click'
+
+  pages:
+    address: '{bucket}/pages/date={date}/version=0/'
+    title: Page impressions
+    description: >-
+      Immutable page-impression events, partitioned by the UTC event date. Same
+      partition-replace loading semantics as clicks.
+    servers:
+      - $ref: '#/servers/gcs'
+      - $ref: '#/servers/s3'
+    parameters:
+      bucket:
+        description: The destination bucket name agreed with Skimlinks.
+      date:
+        description: UTC event date partition key, YYYY-MM-DD.
+    messages:
+      pageImpression:
+        $ref: '#/components/messages/PageImpression'
+
+  commissions:
+    address: '{bucket}/commissions/snapshot_date={snapshot_date}/version=0/'
+    title: Commissions
+    description: >-
+      MUTABLE. A commission can be modified or cancelled after it occurs, so
+      Skimlinks exports a rolling 120-day snapshot of the current state of every
+      commission each day, including cancelled ones. Consumers are told to
+      delete-and-reinsert by transaction_datetime range rather than append.
+    servers:
+      - $ref: '#/servers/gcs'
+      - $ref: '#/servers/s3'
+    parameters:
+      bucket:
+        description: The destination bucket name agreed with Skimlinks.
+      snapshot_date:
+        description: Snapshot partition key, YYYY-MM-DD. Each snapshot restates a 120-day window.
+    messages:
+      commission:
+        $ref: '#/components/messages/Commission'
+
+  products:
+    address: '{bucket}/products/snapshot_date={snapshot_date}/version=0/'
+    title: Products purchased
+    description: >-
+      MUTABLE. Product-purchase rows can change due to returns, so a rolling
+      120-day snapshot is exported daily. Product identity fields (product_sku,
+      product_name) are populated only for merchants that share them; rows for
+      merchants that do not are still present with those fields empty.
+    servers:
+      - $ref: '#/servers/gcs'
+      - $ref: '#/servers/s3'
+    parameters:
+      bucket:
+        description: The destination bucket name agreed with Skimlinks.
+      snapshot_date:
+        description: Snapshot partition key, YYYY-MM-DD.
+    messages:
+      productPurchased:
+        $ref: '#/components/messages/ProductPurchased'
+
+operations:
+  receiveClicks:
+    action: receive
+    channel:
+      $ref: '#/channels/clicks'
+    title: Read the daily clicks partition
+    description: >-
+      Read every file under the date partition (aws s3 ls / gsutil ls the
+      version=0 prefix). click_id can be duplicated but is unique when compared
+      with datehour.
+    messages:
+      - $ref: '#/channels/clicks/messages/click'
+
+  receivePageImpressions:
+    action: receive
+    channel:
+      $ref: '#/channels/pages'
+    title: Read the daily page-impressions partition
+    description: >-
+      impression_id can be duplicated but is unique when compared with datehour.
+    messages:
+      - $ref: '#/channels/pages/messages/pageImpression'
+
+  receiveCommissions:
+    action: receive
+    channel:
+      $ref: '#/channels/commissions'
+    title: Read the daily commissions snapshot
+    description: >-
+      Restates a 120-day window. Load by deleting the overlapping
+      transaction_datetime range in the target table and reinserting the
+      snapshot, so the result matches the Publisher Hub.
+    messages:
+      - $ref: '#/channels/commissions/messages/commission'
+
+  receiveProductsPurchased:
+    action: receive
+    channel:
+      $ref: '#/channels/products'
+    title: Read the daily products-purchased snapshot
+    description: Same delete-and-reinsert loading pattern as commissions.
+    messages:
+      - $ref: '#/channels/products/messages/productPurchased'
+
+components:
+  messages:
+    Click:
+      name: Click
+      title: Click event
+      summary: One affiliate click recorded by Skimlinks.
+      payload:
+        $ref: '#/components/schemas/Click'
+    PageImpression:
+      name: PageImpression
+      title: Page impression event
+      summary: One page impression recorded by the Skimlinks JavaScript.
+      payload:
+        $ref: '#/components/schemas/PageImpression'
+    Commission:
+      name: Commission
+      title: Commission record (mutable snapshot row)
+      payload:
+        $ref: '#/components/schemas/Commission'
+    ProductPurchased:
+      name: ProductPurchased
+      title: Product purchased record (mutable snapshot row)
+      payload:
+        $ref: '#/components/schemas/ProductPurchased'
+
+  schemas:
+    Click:
+      type: object
+      description: Clicks columns as published in the Data Pipe column reference.
+      properties:
+        page_url: { type: string, description: The page_url that received the click. }
+        normalized_page_url: { type: string, description: A cleaned version of the page_url. This is easier to use for aggregations. }
+        target_url: { type: string, description: The url that was clicked on. }
+        normalized_target_url: { type: string, description: A cleaned version of the target_url. This is easier to use for aggregations. }
+        click_id: { type: string, description: 'The click ID. NOTE: This can be duplicated, but is always unique when compared with the click hour.' }
+        impression_id: { type: string, description: The impression ID. }
+        ts: { type: string, format: date-time, description: The timestamp (in UTC) of the click. }
+        publisher_domain_id: { type: integer, description: The ID of your publisher domain. }
+        merchant_id: { type: integer, description: The merchant ID. }
+        user_ip_country: { type: string, description: The 2 digit ISO-3166 country code associated with the user's IP address. }
+        user_ip_region: { type: string, nullable: true, description: The region associated with the user's ip address. This is now set to null. }
+        user_custom: { type: string, description: 'Also known as xcust. An optional user specified parameter used to pass your own internal tracking through Skimlinks'' monetisation engine.' }
+        user_timezone: { type: integer, description: The timezone difference from UTC associated with the user's ip address. }
+        browser_family: { type: string, description: The browser family. An example would be Chrome or Safari. }
+        browser_version: { type: string, description: The browser's version. }
+        device_type: { type: string, nullable: true, description: 'Can be mobile, bot, pc, tablet or null.' }
+        device_family: { type: string, description: 'The more granular version of the device type. Examples: iPhone, Samsung SM-T510.' }
+        os_family: { type: string, description: The operating system family. An example would be Windows or iOS. }
+        os_version: { type: string, description: The operating system version. }
+        skim_product_id: { type: integer, description: The Skimlinks product ID. See SkimlinksProductId. }
+        is_js: { type: boolean, description: Whether or not the click was affiliated using the SkimJS. }
+        is_affiliated: { type: boolean, description: Whether or not the click is affiliated. }
+        link_type: { type: integer, description: 1 means the click is affiliated. 0 means the click is not affiliated. }
+        datehour: { type: string, format: date-time, description: The date and hour (in UTC) of the click. This, used with click_id will be unique. }
+        is_reported: { type: boolean, description: Whether or not the click is reported. }
+
+    PageImpression:
+      type: object
+      description: Pages columns as published in the Data Pipe column reference.
+      properties:
+        publisher_domain_id: { type: integer, description: The ID of your publisher domain. }
+        page_url: { type: string, description: The page_url that received the impression. }
+        normalized_page_url: { type: string, description: A cleaned version of the page_url. }
+        impression_id: { type: string, description: 'The impression ID. NOTE: This can be duplicated, but is always unique when compared with the impression hour.' }
+        ts: { type: string, format: date-time, description: The timestamp (in UTC) of the impression. }
+        user_custom: { type: string, description: Also known as xcust. }
+        user_ip_country: { type: string, description: The 2 digit ISO-3166 country code associated with the user's ip address. }
+        user_ip_region: { type: string, nullable: true, description: This is now set to null. }
+        user_timezone: { type: integer, description: The timezone difference from UTC associated with the user's ip address. }
+        browser_family: { type: string }
+        browser_version: { type: string }
+        device_type: { type: string, nullable: true, description: 'Can be mobile, bot, pc, tablet or null.' }
+        device_family: { type: string }
+        os_family: { type: string }
+        os_version: { type: string }
+        affiliatable_links_count: { type: integer, description: The number of affiliatable links on the page. }
+        skimwords_count: { type: integer, description: The number of Skimwords on the page. }
+        page_referrer: { type: string, description: The page that the impression came from. }
+        datehour: { type: string, format: date-time, description: The date and hour (in UTC) of impression. This, used with impression_id will be unique. }
+
+    Commission:
+      type: object
+      description: Commission columns as published in the Data Pipe column reference.
+      properties:
+        id: { type: string, description: The commission ID. }
+        publisher_domain_id: { type: integer }
+        merchant_id: { type: integer }
+        merchant_name: { type: string }
+        click_id: { type: string }
+        skim_product_id: { type: integer }
+        commission_type: { type: integer, description: The commission type ID. See CommissionType. }
+        click_date: { type: string, format: date-time, description: The timestamp (in UTC) of the click. }
+        currency: { type: string, description: The currency of the transaction (NOT of the converted value). }
+        publisher_commission_amount: { type: string, description: The commission amount you received, converted to your chosen reporting currency, in MINOR currency units. }
+        order_amount: { type: string, description: The order amount, converted to your chosen reporting currency, in MINOR currency units. }
+        items_count: { type: integer, description: The number of items associated with the sale. }
+        target_url: { type: string }
+        normalized_target_url: { type: string }
+        page_url: { type: string }
+        normalized_page_url: { type: string }
+        user_custom: { type: string }
+        ts_updated: { type: string, format: date-time, description: The timestamp (in UTC) of when the commission was last updated. }
+        transaction_datetime: { type: string, format: date-time, description: 'The timestamp of the transaction that the network reported. NOTE: this is not in UTC.' }
+        cancelled: { type: boolean, description: Whether or not the transaction was cancelled. Commission amount itself may have some value. }
+
+    ProductPurchased:
+      type: object
+      description: Products (purchased) columns as published in the Data Pipe column reference.
+      properties:
+        merchant_name: { type: string }
+        merchant_id: { type: integer }
+        publisher_domain_id: { type: integer }
+        purchase_date: { type: string, format: date, description: 'The date of the transaction that the network reported. NOTE: this is not in UTC.' }
+        product_sku: { type: string, description: The stock keeping unit for the product. Populated only for merchants that share product information. }
+        product_name: { type: string, description: Populated only for merchants that share product information. }
+        price: { type: number, description: The price of the product, converted to your chosen reporting currency. }
+        publisher_revenue: { type: number, description: The revenue you received, converted to your chosen reporting currency. }
+        currency: { type: string }
+        quantity: { type: integer, description: The item count of the product. }
+        cancelled: { type: boolean }
+        skim_product_id: { type: integer }
+        target_url: { type: string }
+        page_url: { type: string }
+        normalized_target_url: { type: string }
+        normalized_page_url: { type: string }
+        user_custom: { type: string }
+        click_id: { type: string }
+        click_date: { type: string, format: date-time }
+        total_order_amount: { type: number, description: The value of the complete basket for the order, converted to your chosen reporting currency. }
+        aggregation_id: { type: string, description: In some cases Skimlinks marks commissions as cancelled when the total commission amount is 0 for an aggregation id. }
+        transaction_datetime: { type: string, format: date-time }
+        impression_id: { type: string }
+        user_ip_country: { type: string }
+        user_timezone: { type: integer }
+        browser_family: { type: string }
+        browser_version: { type: string }
+        device_type: { type: string, nullable: true }
+        device_family: { type: string }
+        os_family: { type: string }
+        os_version: { type: string }
+        is_js: { type: boolean }
+        platform_id: { type: integer, description: 0 is Web. 1 is AMP. }
+        page_referrer: { type: string }
+        normalized_page_referrer: { type: string }
+        page_utm_source: { type: string }
+        page_utm_term: { type: string }
+        page_utm_campaign: { type: string }
+        page_utm_medium: { type: string }
+        page_utm_content: { type: string }
+        page_utm_brand: { type: string }
+        link_utm_source: { type: string }
+        link_utm_term: { type: string }
+        link_utm_campaign: { type: string }
+        link_utm_medium: { type: string }
+        link_utm_content: { type: string }
+        page_fbclid: { type: string }
+        page_cid: { type: string }
+        page_ncid: { type: string }
+        page_source: { type: string }
+        page_src: { type: string }
+
+    CommissionType:
+      type: integer
+      description: Commission type IDs published by Skimlinks. Only types 1, 2 and 3 may have an associated click, and even then rarely absent; types 4-10 never have one.
+      oneOf:
+        - { const: 1, title: Sale }
+        - { const: 2, title: Lead }
+        - { const: 3, title: Click }
+        - { const: 4, title: Performance incentive (redistributed) }
+        - { const: 5, title: Referral bonus }
+        - { const: 6, title: Standard bonus }
+        - { const: 7, title: Performance Incentives (Original) }
+        - { const: 8, title: Bonus merchant }
+        - { const: 9, title: Flat-fee bonus }
+        - { const: 10, title: Flat-fee bonus Skimlinks fee }
+
+    SkimlinksProductId:
+      type: integer
+      description: Skimlinks product IDs published by Skimlinks.
+      oneOf:
+        - { const: 1, title: Skimlinks }
+        - { const: 2, title: Skimwords }
+        - { const: 12, title: PCM }
+        - { const: 13, title: Editorial }
+        - { const: 16, title: Product Key }
+
+x-encoding:
+  description: >-
+    The column types above are LOGICAL types. On-disk encoding depends on the
+    file format agreed with Skimlinks (Avro binary, or CSV compressed or
+    uncompressed), exactly as published.
+  timestamp: { avro: long (UNIX milliseconds, UTC), csv: 'string YYYY-MM-DD HH:MM:SS (UTC)' }
+  date: { avro: int (days since 1970-01-01), csv: string YYYY-MM-DD }
+  boolean: { avro: native AVRO boolean, csv: string TRUE / FALSE }
+
+x-partitioning:
+  immutable_datasets: [clicks, pages]
+  immutable_partition_key: date
+  mutable_datasets: [commissions, products]
+  mutable_partition_key: snapshot_date
+  snapshot_window_days: 120
+  version_prefix: version=0
+  restatement: >-
+    Every partition is written under version=0/. A restated partition REPLACES
+    the contents of the same version=0/ directory — higher version numbers are
+    never created and the previous files are removed before the new ones are
+    written, so a read job finishing after a restate sees only the latest data.
+  retention: >-
+    When the destination bucket is owned by Skimlinks, files are retained for 30
+    days after initial upload; customers are told to keep their own backups.
+
+x-onboarding:
+  model: sales-assisted
+  steps:
+  - Agree that Data Pipe is the right solution and choose the delivery file format.
+  - Set up the destination bucket (GCS preferred, or S3) and arrange permissions with Skimlinks.
+  - Skimlinks configures the daily export pipeline and runs a testing period before handover.
+  note: >-
+    There is no self-serve provisioning API and no published price. Access is
+    arranged with Skimlinks directly.

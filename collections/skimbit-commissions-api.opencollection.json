@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Skimlinks Merchant Commissions API",
+    "version": "v4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "access_token",
+      "value": "{{access_token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Commissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search commissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://reporting.skimapis.com/publisher/:publisher_id/commission-report",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "custom_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by xcust custom click id."
+              },
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "a_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_dir",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "commission_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "commission_type",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Query Skimlinks' raw commission data between two dates, or list all commissions changed since a point in time via `updated_since`. Limited to 40 requests/min and 300/hour per API key (80/min, 500/hour, 1000/day per IP)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

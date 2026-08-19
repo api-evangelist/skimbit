@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Skimlinks Merchant Commissions Merchants API",
+    "version": "v4"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "access_token",
+      "value": "{{access_token}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Merchants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List / search merchants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://merchants.skimapis.com/v4/publisher/:publisher_id/merchants",
+            "params": [
+              {
+                "name": "publisher_id",
+                "value": "",
+                "type": "path",
+                "description": "Your Publisher ID."
+              },
+              {
+                "name": "access_token",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp-based access token from the authentication API."
+              },
+              {
+                "name": "publisher_domain_id",
+                "value": "",
+                "type": "query",
+                "description": "Retrieve information for a specific domain id."
+              },
+              {
+                "name": "a_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by advertiser_id."
+              },
+              {
+                "name": "merchant_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by merchant_id."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query string."
+              },
+              {
+                "name": "vertical",
+                "value": "",
+                "type": "query",
+                "description": "List merchants from one vertical only (vertical id)."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "Two character country code."
+              },
+              {
+                "name": "alternative_vertical_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "alternative_vertical_taxonomy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "alternative_vertical_country",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "favourite_type",
+                "value": "",
+                "type": "query",
+                "description": "Pass `favourite` to retrieve favourites only."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of rows to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Paginate through results."
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort_dir",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the set of Skimlinks merchants available for the authenticated publisher. The merchants and rates returned depend on the specific publisher domain being queried; if `publisher_domain_id` is omitted the first registered domain is used."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
