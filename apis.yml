@@ -48,6 +48,17 @@ tags:
 - Advertising
 - Retail
 - Reporting
+- Product
+- E-Commerce
+tags_raw:
+- Company
+- Affiliate Marketing
+- Content Monetization
+- Commerce
+- Publishers
+- Advertising
+- Retail
+- Reporting
 - Products
 - eCommerce
 apis:
@@ -137,6 +148,8 @@ apis:
   humanURL: https://developers.skimlinks.com/product-key.html
   baseURL: https://products.skimapis.com
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
