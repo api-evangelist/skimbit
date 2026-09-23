@@ -1,20 +1,14 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Skimlinks Merchant Commissions API
-  version: v4
-  description: 'The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher''s monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.
-
-
-    Authentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.
-
-
-    Rate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.'
+  title: Skimlinks Reporting Commissions API
+  version: v1
+  description: 'The Skimlinks Reporting API gives publishers aggregated and individual commission-level access to their site''s performance data: raw commissions, aggregated performance reports, multi-aggregated link and page reports (streamed as NDJSON), trending products, products bought, payment status, and deactivated merchants.'
   contact:
     name: Skimlinks Developer Support
-    url: https://developers.skimlinks.com/merchant.html
+    url: https://developers.skimlinks.com/reporting.html
   x-generated: '2026-07-21'
   x-method: searched
-  x-source: https://developers.skimlinks.com/merchant.html (Apiary blueprint skimlinksmerchantapi)
+  x-source: https://developers.skimlinks.com/reporting.html (Apiary blueprint skimlinksreporting)
 servers:
 - url: https://reporting.skimapis.com
   description: Skimlinks Reporting API production host
@@ -160,21 +154,7 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  responses:
-    TooManyRequests:
-      description: Rate limit exceeded. Returns 429 Too Many Requests.
   schemas:
-    Pagination:
-      type: object
-      properties:
-        has_next:
-          type: boolean
-        total_count:
-          type: integer
-        offset:
-          type: integer
-        limit:
-          type: integer
     Commission:
       type: object
       properties:
@@ -225,6 +205,20 @@ components:
           type: integer
         publisher_domain_id:
           type: integer
+    Pagination:
+      type: object
+      properties:
+        has_next:
+          type: boolean
+        total_count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded. Returns 429 Too Many Requests.
   securitySchemes:
     access_token:
       type: apiKey

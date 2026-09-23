@@ -1,14 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Skimlinks Merchant Commissions Merchants API
+  title: Skimlinks Merchant Merchants API
   version: v4
-  description: 'The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher''s monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.
-
-
-    Authentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.
-
-
-    Rate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.'
+  description: The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher.
   contact:
     name: Skimlinks Developer Support
     url: https://developers.skimlinks.com/merchant.html
@@ -136,11 +130,13 @@ paths:
                   has_more:
                     type: boolean
                   next_val:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   last_val:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   num_returned:
                     type: integer
                   publisher_domain_stats:
@@ -172,44 +168,7 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  responses:
-    TooManyRequests:
-      description: Rate limit exceeded (40 requests/min, 1000/hour per API key).
   schemas:
-    Rate:
-      type: object
-      nullable: true
-      properties:
-        aggregation_type:
-          type: string
-          enum:
-          - minimum
-          - maximum
-          - normal
-        rate_type:
-          type: string
-          enum:
-          - percentage
-          - flat_rate
-        base_rate:
-          type: number
-        increased_rate:
-          type: number
-        currency:
-          type: string
-          nullable: true
-        payout_type:
-          type: string
-          enum:
-          - cpa
-          - cpc
-          - cpl
-        description:
-          type: string
-          nullable: true
-        start_date:
-          type: string
-          format: date-time
     Merchant:
       type: object
       description: A merchant program having an active relationship with the authenticated publisher.
@@ -266,15 +225,43 @@ components:
           $ref: '#/components/schemas/Rate'
         metadata:
           $ref: '#/components/schemas/Metadata'
-    Metadata:
-      type: object
+    Rate:
+      type:
+      - object
+      - 'null'
       properties:
-        logo:
+        aggregation_type:
           type: string
+          enum:
+          - minimum
+          - maximum
+          - normal
+        rate_type:
+          type: string
+          enum:
+          - percentage
+          - flat_rate
+        base_rate:
+          type: number
+        increased_rate:
+          type: number
+        currency:
+          type:
+          - string
+          - 'null'
+        payout_type:
+          type: string
+          enum:
+          - cpa
+          - cpc
+          - cpl
         description:
+          type:
+          - string
+          - 'null'
+        start_date:
           type: string
-        special_conditions:
-          type: string
+          format: date-time
     PublisherDomainStat:
       type: object
       properties:
@@ -290,6 +277,18 @@ components:
           type: number
         estimated_reversal_rate:
           type: number
+    Metadata:
+      type: object
+      properties:
+        logo:
+          type: string
+        description:
+          type: string
+        special_conditions:
+          type: string
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded (40 requests/min, 1000/hour per API key).
   securitySchemes:
     access_token:
       type: apiKey

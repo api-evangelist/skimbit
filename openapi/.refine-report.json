@@ -1,28 +1,39 @@
 {
   "provider": "skimbit",
   "sources": [
-    "skimbit-commissions-api-openapi.yml",
-    "skimbit-domains-api-openapi.yml",
-    "skimbit-merchants-api-openapi.yml",
-    "skimbit-offers-api-openapi.yml",
-    "skimbit-payments-api-openapi.yml",
-    "skimbit-products-api-openapi.yml",
-    "skimbit-reports-api-openapi.yml",
-    "skimbit-verticals-api-openapi.yml"
+    "_original/skimbit-merchant-openapi.yml",
+    "_original/skimbit-product-key-openapi.yml",
+    "_original/skimbit-reporting-openapi.yml"
   ],
   "outputs": [
-    "skimbit-commissions-api-openapi.yml",
     "skimbit-domains-api-openapi.yml",
     "skimbit-merchants-api-openapi.yml",
     "skimbit-offers-api-openapi.yml",
-    "skimbit-payments-api-openapi.yml",
+    "skimbit-verticals-api-openapi.yml",
     "skimbit-products-api-openapi.yml",
-    "skimbit-reports-api-openapi.yml",
-    "skimbit-verticals-api-openapi.yml"
+    "skimbit-commissions-api-openapi.yml",
+    "skimbit-payments-api-openapi.yml",
+    "skimbit-reports-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "skimbit-merchant-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "skimbit-product-key-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "skimbit-reporting-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tag 'Products' spans 2 source specs (skimbit-product-key-openapi.yml, skimbit-reporting-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "skimbit-commissions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "skimbit-domains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "skimbit-merchants-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "skimbit-offers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "skimbit-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "skimbit-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "skimbit-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "skimbit-verticals-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

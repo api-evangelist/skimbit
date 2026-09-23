@@ -1,14 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Skimlinks Merchant Commissions Domains API
+  title: Skimlinks Merchant Domains API
   version: v4
-  description: 'The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher. It exposes merchant programs, the publisher''s monetizable domains, the Skimlinks vertical taxonomies, and current merchant offers (coupons, deals, promotions). All responses are JSON.
-
-
-    Authentication: every request requires a temporary, timestamp-based `access_token` passed as a query parameter. Obtain one by POSTing your `client_id` and `client_secret` (from Publisher Hub > Toolbox > APIs > API Authentication credentials) with `grant_type=client_credentials` to `https://authentication.skimapis.com/access_token`.
-
-
-    Rate limiting: some endpoints are limited to 40 requests per minute and 1000 per hour per API key. Exceeding the limit returns `429 Too Many Requests`.'
+  description: The Skimlinks Merchant API provides a convenient way to gather information about the merchants (advertisers/programs) participating in the Skimlinks affiliate program that are available to the authenticated publisher.
   contact:
     name: Skimlinks Developer Support
     url: https://developers.skimlinks.com/merchant.html
@@ -52,14 +46,17 @@ paths:
                   has_more:
                     type: boolean
                   last_val:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   next_prefix:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   next_val:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                   num_returned:
                     type: integer
                   domains:

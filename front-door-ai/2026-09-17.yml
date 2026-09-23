@@ -1,0 +1,25 @@
+# Front Door AI Index — skimbit — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: skimbit
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: skimlinks.com
+  final_host: www.skimlinks.com
+  ownership: own
+  owner: skimbit
+  shares_host_with: null
+  inherited_from: null
+  verdict: silent
+  score: 0
+  host_score: 0
+  density: 0.0
+  words: 1397
+  tiers:
+    agentic: 0
+    core: 0
+    model: 0
+  ambiguous: 1
+  top_terms:
+    automation: 1
