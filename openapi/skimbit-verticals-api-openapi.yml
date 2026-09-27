@@ -63,19 +63,6 @@ paths:
                   $ref: '#/components/schemas/AlternativeVertical'
 components:
   schemas:
-    Vertical:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        group_name:
-          type: string
-        group_id:
-          type:
-          - integer
-          - 'null'
     AlternativeVertical:
       type: object
       properties:
@@ -89,6 +76,19 @@ components:
           type: array
           items:
             type: object
+    Vertical:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        group_name:
+          type: string
+        group_id:
+          type:
+          - integer
+          - 'null'
   securitySchemes:
     access_token:
       type: apiKey
