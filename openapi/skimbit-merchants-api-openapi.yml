@@ -169,67 +169,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    Metadata:
-      type: object
-      properties:
-        logo:
-          type: string
-        description:
-          type: string
-        special_conditions:
-          type: string
-    Rate:
-      type:
-      - object
-      - 'null'
-      properties:
-        aggregation_type:
-          type: string
-          enum:
-          - minimum
-          - maximum
-          - normal
-        rate_type:
-          type: string
-          enum:
-          - percentage
-          - flat_rate
-        base_rate:
-          type: number
-        increased_rate:
-          type: number
-        currency:
-          type:
-          - string
-          - 'null'
-        payout_type:
-          type: string
-          enum:
-          - cpa
-          - cpc
-          - cpl
-        description:
-          type:
-          - string
-          - 'null'
-        start_date:
-          type: string
-          format: date-time
-    PublisherDomainStat:
-      type: object
-      properties:
-        publisher_domain_id:
-          type: integer
-        calculated_average_order_value:
-          type: number
-        calculated_commission_rate:
-          type: number
-        calculated_conversion_rate:
-          type: number
-        calculated_ecpc:
-          type: number
-        estimated_reversal_rate:
-          type: number
     Merchant:
       type: object
       description: A merchant program having an active relationship with the authenticated publisher.
@@ -286,6 +225,67 @@ components:
           $ref: '#/components/schemas/Rate'
         metadata:
           $ref: '#/components/schemas/Metadata'
+    Rate:
+      type:
+      - object
+      - 'null'
+      properties:
+        aggregation_type:
+          type: string
+          enum:
+          - minimum
+          - maximum
+          - normal
+        rate_type:
+          type: string
+          enum:
+          - percentage
+          - flat_rate
+        base_rate:
+          type: number
+        increased_rate:
+          type: number
+        currency:
+          type:
+          - string
+          - 'null'
+        payout_type:
+          type: string
+          enum:
+          - cpa
+          - cpc
+          - cpl
+        description:
+          type:
+          - string
+          - 'null'
+        start_date:
+          type: string
+          format: date-time
+    PublisherDomainStat:
+      type: object
+      properties:
+        publisher_domain_id:
+          type: integer
+        calculated_average_order_value:
+          type: number
+        calculated_commission_rate:
+          type: number
+        calculated_conversion_rate:
+          type: number
+        calculated_ecpc:
+          type: number
+        estimated_reversal_rate:
+          type: number
+    Metadata:
+      type: object
+      properties:
+        logo:
+          type: string
+        description:
+          type: string
+        special_conditions:
+          type: string
   responses:
     TooManyRequests:
       description: Rate limit exceeded (40 requests/min, 1000/hour per API key).
