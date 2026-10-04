@@ -515,6 +515,9 @@ paths:
                   pagination:
                     $ref: '#/components/schemas/Pagination'
 components:
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded. Returns 429 Too Many Requests.
   schemas:
     Pagination:
       type: object
@@ -527,9 +530,6 @@ components:
           type: integer
         limit:
           type: integer
-  responses:
-    TooManyRequests:
-      description: Rate limit exceeded. Returns 429 Too Many Requests.
   securitySchemes:
     access_token:
       type: apiKey

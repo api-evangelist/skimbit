@@ -425,6 +425,9 @@ paths:
     - url: https://reporting.skimapis.com
       description: Skimlinks Reporting API production host
 components:
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded. Returns 429 Too Many Requests.
   schemas:
     Product:
       type: object
@@ -532,9 +535,6 @@ components:
           type: integer
         limit:
           type: integer
-  responses:
-    TooManyRequests:
-      description: Rate limit exceeded. Returns 429 Too Many Requests.
   securitySchemes:
     access_token:
       type: apiKey

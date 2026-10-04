@@ -154,6 +154,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded. Returns 429 Too Many Requests.
   schemas:
     Commission:
       type: object
@@ -216,9 +219,6 @@ components:
           type: integer
         limit:
           type: integer
-  responses:
-    TooManyRequests:
-      description: Rate limit exceeded. Returns 429 Too Many Requests.
   securitySchemes:
     access_token:
       type: apiKey

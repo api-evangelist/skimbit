@@ -121,7 +121,55 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded (40 requests/min, 1000/hour per API key).
   schemas:
+    Offer:
+      type: object
+      properties:
+        id:
+          type: integer
+        offer_type:
+          type: string
+          enum:
+          - sale
+          - coupon
+          - sweepstake
+          - hot_product
+          - free_shipping
+          - seasonal
+        offer_starts:
+          type: string
+          format: date-time
+        offer_ends:
+          type: string
+          format: date-time
+        title:
+          type: string
+        description:
+          type: string
+        coupon_code:
+          type:
+          - string
+          - 'null'
+        url:
+          type: string
+        terms:
+          type:
+          - string
+          - 'null'
+        merchant_details:
+          $ref: '#/components/schemas/Merchant'
+    Metadata:
+      type: object
+      properties:
+        logo:
+          type: string
+        description:
+          type: string
+        special_conditions:
+          type: string
     Merchant:
       type: object
       description: A merchant program having an active relationship with the authenticated publisher.
@@ -215,54 +263,6 @@ components:
         start_date:
           type: string
           format: date-time
-    Offer:
-      type: object
-      properties:
-        id:
-          type: integer
-        offer_type:
-          type: string
-          enum:
-          - sale
-          - coupon
-          - sweepstake
-          - hot_product
-          - free_shipping
-          - seasonal
-        offer_starts:
-          type: string
-          format: date-time
-        offer_ends:
-          type: string
-          format: date-time
-        title:
-          type: string
-        description:
-          type: string
-        coupon_code:
-          type:
-          - string
-          - 'null'
-        url:
-          type: string
-        terms:
-          type:
-          - string
-          - 'null'
-        merchant_details:
-          $ref: '#/components/schemas/Merchant'
-    Metadata:
-      type: object
-      properties:
-        logo:
-          type: string
-        description:
-          type: string
-        special_conditions:
-          type: string
-  responses:
-    TooManyRequests:
-      description: Rate limit exceeded (40 requests/min, 1000/hour per API key).
   securitySchemes:
     access_token:
       type: apiKey

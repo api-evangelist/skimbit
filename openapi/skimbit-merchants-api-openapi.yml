@@ -168,7 +168,34 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded (40 requests/min, 1000/hour per API key).
   schemas:
+    PublisherDomainStat:
+      type: object
+      properties:
+        publisher_domain_id:
+          type: integer
+        calculated_average_order_value:
+          type: number
+        calculated_commission_rate:
+          type: number
+        calculated_conversion_rate:
+          type: number
+        calculated_ecpc:
+          type: number
+        estimated_reversal_rate:
+          type: number
+    Metadata:
+      type: object
+      properties:
+        logo:
+          type: string
+        description:
+          type: string
+        special_conditions:
+          type: string
     Merchant:
       type: object
       description: A merchant program having an active relationship with the authenticated publisher.
@@ -262,33 +289,6 @@ components:
         start_date:
           type: string
           format: date-time
-    PublisherDomainStat:
-      type: object
-      properties:
-        publisher_domain_id:
-          type: integer
-        calculated_average_order_value:
-          type: number
-        calculated_commission_rate:
-          type: number
-        calculated_conversion_rate:
-          type: number
-        calculated_ecpc:
-          type: number
-        estimated_reversal_rate:
-          type: number
-    Metadata:
-      type: object
-      properties:
-        logo:
-          type: string
-        description:
-          type: string
-        special_conditions:
-          type: string
-  responses:
-    TooManyRequests:
-      description: Rate limit exceeded (40 requests/min, 1000/hour per API key).
   securitySchemes:
     access_token:
       type: apiKey
