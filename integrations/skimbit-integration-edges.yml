@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/skimbit/integrations
+- https://n8n.io/integrations/skimbit/
+- https://composio.dev/toolkits/skimbit
+- https://monid.ai/tools/skimbit
+checked:
+- https://composio.dev/toolkits/skimbit
+- https://monid.ai/tools/skimbit
+- https://n8n.io/integrations/skimbit/
+- https://zapier.com/apps/skimbit/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
